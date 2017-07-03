@@ -8,7 +8,6 @@ import de.dfki.lt.mdparser.parser.Parser;
 public class MDPperformance {
 	private double unlabeledAcc;
 	private double labeledAcc;
-	private double speed;
 
 	public double getUnlabeledAcc() {
 		return unlabeledAcc;
@@ -22,21 +21,9 @@ public class MDPperformance {
 	public void setLabeledAcc(double labeledAcc) {
 		this.labeledAcc = labeledAcc;
 	}
-	public double getSpeed() {
-		return speed;
-	}
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-
-	public MDPperformance(){
-		//this.speed = Parser.time;
-		this.speed = 0.0;
-	}
+	
 
 	public MDPperformance(Eval eval){
-		//this.speed = Parser.time;
-		this.speed = 0.0;
 		this.unlabeledAcc = eval.getParentsAccuracy();
 		this.labeledAcc = eval.getLabelsAccuracy();
 	}
@@ -47,7 +34,6 @@ public class MDPperformance {
 
 		output += " " + formatter.format(this.unlabeledAcc*100) +" | ";
 		output += " " + formatter.format(this.labeledAcc*100) +" | ";
-		output += " " + this.speed;
 		return output;
 	}
 

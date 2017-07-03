@@ -16,9 +16,7 @@ import de.dfki.lt.mdparser.eval.Eval;
 
 public class UDlanguageMDPmodelFactory {
 
-	private Eval eval;
-
-	public UDlanguageMDPmodelFactory(String version){
+ public UDlanguageMDPmodelFactory(String version){
 		UDlanguages.version = version;
 		UDlanguages.addLanguages();
 	}
@@ -30,7 +28,6 @@ public class UDlanguageMDPmodelFactory {
 		String modelZipFileName = ConlluToConllMapper.getMDPmodelZipFileName(languageName, languageID);
 
 		System.out.println("MDP training: " + trainFile + " into ModelFile: " + modelZipFileName);
-
 
 		MDPtrainer.train(trainFile, modelZipFileName);
 	}
@@ -50,13 +47,13 @@ public class UDlanguageMDPmodelFactory {
 		System.out.println("System time (msec): " + (time2-time1));
 	}
 
-	private void testLanguage(String languageName, String languageID) throws IOException{
+	private Eval testLanguage(String languageName, String languageID) throws IOException{
 
 		String testFile = ConlluToConllMapper.getConllTestFile(languageName, languageID);
 		String modelZipFileName = ConlluToConllMapper.getMDPmodelZipFileName(languageName, languageID);
 		String mdpResultFile = ConlluToConllMapper.getConllMDPresultFile(testFile);
 
-		this.eval = MDPrunner.conllFileParsingAndEval(testFile, mdpResultFile, modelZipFileName);
+		return MDPrunner.conllFileParsingAndEval(testFile, mdpResultFile, modelZipFileName);
 	}
 
 	private void testAllLanguages() throws IOException{
@@ -66,10 +63,10 @@ public class UDlanguageMDPmodelFactory {
 		time1 = System.currentTimeMillis();
 		for (Pair<String, String> language : UDlanguages.languages){
 			System.out.println("Testing of: " + language);
-			this.testLanguage(language.getLeft(), language.getRight());
+			Eval eval = this.testLanguage(language.getLeft(), language.getRight());
 			System.out.println("\n");
 
-			MDPperformance mdpPerformance = new MDPperformance(this.eval);
+			MDPperformance mdpPerformance = new MDPperformance(eval);
 			udPerformance.addNewLanguageMDPperformance(language.getRight(), mdpPerformance);
 		}
 		time2 = System.currentTimeMillis();
@@ -83,5 +80,6 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("1_3");
 		UDlanguages.ignore = true;
 		udFactory.trainAllLanguages();
+		udFactory.testAllLanguages();
 	}
 }
