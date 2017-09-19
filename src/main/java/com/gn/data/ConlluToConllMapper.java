@@ -97,7 +97,7 @@ public class ConlluToConllMapper {
 		String corpusConfigFileName = 
 		    ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID);
 		try (Writer out = Files.newBufferedWriter(Paths.get(corpusConfigFileName))) {
-		  ConlluToConllMapper.corpusConfig.write(Files.newBufferedWriter(Paths.get("configFilename")));
+		  ConlluToConllMapper.corpusConfig.write(out);
 		} catch (ConfigurationException e) {
       e.printStackTrace();
     }
