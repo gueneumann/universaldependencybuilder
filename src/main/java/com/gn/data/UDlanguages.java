@@ -19,6 +19,14 @@ public class UDlanguages {
 
 	public static List<Pair<String,String>> languages = new ArrayList<Pair<String,String>>();
 
+	/**
+	 * This method processes all UD grammar subdirectories
+	 * and collect all language. languageID pairs.
+	 * It will do only for those grammars which have train, devel, and test CONLLU files.
+	 * All others are ignored.
+	 * We will do so, as a starter for mapping them to our conll-x format and for creating GNT and MDP cofnig files.
+	 * @param path
+	 */
 	private static void getAllLanguagePairs(String path) {
 		File dir = new File(path);
 	      File[] subdirs = dir.listFiles();
@@ -61,56 +69,20 @@ public class UDlanguages {
 	      
 	   }
 
-	private static List<Pair<String,String>> addLanguages_1_2(){
-		setVersion_1_2();
-		UDlanguages.getAllLanguagePairs(conlluPath);
-		return languages;
-	}
-
-	private static List<Pair<String, String>> addLanguages_1_3() {
-		setVersion_1_3();
-		UDlanguages.getAllLanguagePairs(conlluPath);
-		return languages;
-	}
-
-	private static List<Pair<String, String>> addLanguages_2_1() {
-		setVersion_2_1();
-		UDlanguages.getAllLanguagePairs(conlluPath);
-		return languages;
-	}
-
-	public static List<Pair<String,String>> addLanguages(){
-		switch (UDlanguages.version){
-		case "1_2": return addLanguages_1_2();
-		case "1_3": return addLanguages_1_3();
-		case "2_1": return addLanguages_2_1();
-		default: return null;
+	public static List<Pair<String, String>> addLanguages() {
+		switch (UDlanguages.version) {
+		case "1_2":
+			setVersion_1_2();
+		case "1_3":
+			setVersion_1_3();
+		case "2_1":
+			setVersion_2_1();
 		}
+		UDlanguages.getAllLanguagePairs(conlluPath);
+		return languages;
 	}
 
-	public static void setVersion_1_2(){
-		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.2/";
-		conllPath = "/Users/gune00/data/UniversalDependencies/conll/";
-		version = "1_2";
-	}
-
-	public static void setVersion_1_3(){
-		ignoreList.add("la_proiel");
-		ignoreList.add("en_esl");
-		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.3/";
-		conllPath = "/Users/gune00/data/UniversalDependencies/conll3/";
-		version = "1_3";	
-	}
-	
-	public static void setVersion_2_1(){
-		ignoreList.add("la_proiel");
-		ignoreList.add("sme"); // has no devel
-		ignoreList.add("ro_nonstandard"); // has no devel
-		conlluPath = "/local/data/UniversalDependencies/ud-treebanks-v2.1/ud-treebanks-v2.1/";
-		conllPath = "/local/data/UniversalDependencies/conll21/";
-		version = "2_1";	
-	}
-	
+	// Only used currentlyl in Nemex
 	public static void setUdVersion(String udVersion){
 		switch (udVersion){
 		case "1_2": UDlanguages.setVersion_1_2();
@@ -119,6 +91,29 @@ public class UDlanguages {
 		}
 	}
 
+	private static void setVersion_1_2(){
+		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.2/";
+		conllPath = "/Users/gune00/data/UniversalDependencies/conll/";
+		version = "1_2";
+	}
+
+	private static void setVersion_1_3(){
+		ignoreList.add("la_proiel");
+		ignoreList.add("en_esl");
+		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.3/";
+		conllPath = "/Users/gune00/data/UniversalDependencies/conll3/";
+		version = "1_3";	
+	}
+	
+	private static void setVersion_2_1(){
+		ignoreList.add("la_proiel");
+		ignoreList.add("sme"); // has no devel
+		ignoreList.add("ro_nonstandard"); // has no devel
+		conlluPath = "/local/data/UniversalDependencies/ud-treebanks-v2.1/ud-treebanks-v2.1/";
+		conllPath = "/local/data/UniversalDependencies/conll21/";
+		version = "2_1";	
+	}
+	
 	public static void main(String[] args) {
 		version = "2_1";
 		addLanguages();
