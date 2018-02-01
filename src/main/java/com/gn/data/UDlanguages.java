@@ -91,13 +91,13 @@ public class UDlanguages {
 		}
 	}
 
-	private static void setVersion_1_2(){
+	public static void setVersion_1_2(){
 		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.2/";
 		conllPath = "/Users/gune00/data/UniversalDependencies/conll/";
 		version = "1_2";
 	}
 
-	private static void setVersion_1_3(){
+	public static void setVersion_1_3(){
 		ignoreList.add("la_proiel");
 		ignoreList.add("en_esl");
 		conlluPath = "/Users/gune00/data/UniversalDependencies/ud-treebanks-v1.3/";
@@ -105,7 +105,7 @@ public class UDlanguages {
 		version = "1_3";	
 	}
 	
-	private static void setVersion_2_1(){
+	public static void setVersion_2_1(){
 		ignoreList.add("la_proiel");
 		ignoreList.add("sme"); // has no devel
 		ignoreList.add("ro_nonstandard"); // has no devel
