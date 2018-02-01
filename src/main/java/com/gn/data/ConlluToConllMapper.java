@@ -191,10 +191,9 @@ public class ConlluToConllMapper {
 		if (UDlanguages.version.equals("1_2")){
 			fileName = UDlanguages.conlluPath + "UD_" + languageName + "-master/" + languageID + "-ud-" + mode + ".conllu";
 		}
-		else
-			if (UDlanguages.version.equals("1_3")){
-				fileName = UDlanguages.conlluPath + "UD_" + languageName  + "/" + languageID + "-ud-" + mode + ".conllu";
-			}
+		else {
+			fileName = UDlanguages.conlluPath + "UD_" + languageName  + "/" + languageID + "-ud-" + mode + ".conllu";
+				}
 		return fileName;
 	}
 
@@ -352,26 +351,7 @@ public class ConlluToConllMapper {
 		ConlluToConllMapper.transformerTest(languageName, languageID);
 	}
 	
-	public static void runUDversion_1_2() throws IOException{
-		UDlanguages.setVersion_1_2();
-		
-		UDlanguages.addLanguages();
-		for (Pair<String, String> language : UDlanguages.languages){
-			System.out.println("Processing: " + language);
-			initLanguageCorpusConfig(language.getRight());
-			initLanguageModelConfig(language.getRight());
-
-			transformer(language.getLeft(), language.getRight());
-
-			writeCorpusConfig(language.getLeft(), language.getRight());
-			writeModelConfig(language.getLeft(), language.getRight());
-		}
-	}
-	
-	public static void runUDversion_1_3() throws IOException{
-		UDlanguages.setVersion_1_3();
-		
-		UDlanguages.addLanguages();
+	public static void runUDversion() throws IOException{
 		for (Pair<String, String> language : UDlanguages.languages){
 			System.out.println("Processing: " + language);
 			initLanguageCorpusConfig(language.getRight());
@@ -390,6 +370,8 @@ public class ConlluToConllMapper {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException{
-		runUDversion_1_3();
+		UDlanguages.setVersion_2_1();
+		UDlanguages.addLanguages();
+		runUDversion();
 	}
 }
