@@ -215,6 +215,12 @@ public class ConlluToConllMapper {
 	private static String makeSentenceFileName(String conllFileName){
 		return conllFileName.split("\\.conll")[0]+"-sents.txt";
 	}
+	
+	private static boolean containsmultipleSpanToken(String conllTokenLine) {
+		String[] tokenizedLine = conllTokenLine.split("\t");
+		boolean multipleToken = tokenizedLine[0].contains("-");
+		return multipleToken;
+	}
 
 	/**
 	 * bascially maps a conllu to conll format - very simple process so far.
@@ -247,8 +253,10 @@ public class ConlluToConllMapper {
 			{
 				// Normalize line which is assumed to correspond to a sentence.
 				if (!line.startsWith("#")){
+					if (!containsmultipleSpanToken(line)){
 					writer.write(line);
 					writer.newLine();
+					}
 				}
 			}
 		}

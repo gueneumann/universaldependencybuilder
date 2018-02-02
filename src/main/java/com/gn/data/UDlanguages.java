@@ -3,6 +3,8 @@ package com.gn.data;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import de.dfki.mlt.gnt.data.Pair;
@@ -77,7 +79,20 @@ public class UDlanguages {
 			setVersion_2_1();
 		}
 		UDlanguages.getAllLanguagePairs(conlluPath);
+		sortLanguages();
 		return languages;
+	}
+	
+	private static void sortLanguages() {
+		Collections.sort(languages, new Comparator<Pair<String,String>>() {
+            @Override
+            public int compare(Pair<String,String> item, Pair<String,String> t1) {
+                String s1 = item.getLeft();
+                String s2 = t1.getLeft();
+                return s1.compareToIgnoreCase(s2);
+            }
+
+        });
 	}
 
 	// Only used currently in Nemex

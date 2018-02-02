@@ -93,7 +93,7 @@ public class UDlanguageGNTmodelFactory {
 	
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_1");
-		//udFactory.trainAllLanguages();
+		udFactory.trainAllLanguages();
 		udFactory.testAllLanguages(false);
 	}
 
