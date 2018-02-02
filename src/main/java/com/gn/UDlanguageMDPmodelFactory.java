@@ -74,12 +74,52 @@ public class UDlanguageMDPmodelFactory {
 		System.out.println("System time (msec): " + (time2-time1));
 		System.out.println(udPerformance.toMDPString());
 	}
+	
+	private void trainSingleLanguage(String language, String languageID) throws NoSuchAlgorithmException, IOException, InvalidInputDataException {
+		this.trainLanguage(language, languageID);
+	}
+	
+	private void testSinglelanguage(String language, String languageID, UDlanguagePerformance udPerformance) throws IOException {
+		System.out.println("Testing of: " + language);
+		Eval eval = testLanguage(language, languageID);
+		System.out.println("\n");
+
+		MDPperformance mdpPerformance = new MDPperformance(eval);
+		udPerformance.addNewLanguageMDPperformance(languageID, mdpPerformance);	
+	}
+	
+	// This is for training and testing for the languages handled in EU project IREAD
+	private void trainIREADlanguages() throws NoSuchAlgorithmException, IOException, InvalidInputDataException {
+		//trainSingleLanguage("English", "en");
+		trainSingleLanguage("German", "de");
+		trainSingleLanguage("Greek", "el");
+		trainSingleLanguage("Spanish", "es");
+	}
+	
+	private void testIREADlanguages() throws IOException{
+		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
+		long time1;
+		long time2;
+		
+		time1 = System.currentTimeMillis();
+		this.testSinglelanguage("English", "en", udPerformance);
+		this.testSinglelanguage("German", "de", udPerformance);
+		this.testSinglelanguage("Greek", "el", udPerformance);
+		this.testSinglelanguage("Spanish", "es", udPerformance);
+		
+		time2 = System.currentTimeMillis();
+		System.out.println("Complete testing for " + UDlanguages.languages.size() + " languages:");
+		System.out.println("System time (msec): " + (time2-time1));
+		System.out.println(udPerformance.toMDPString());
+	}
+	
 
 	public static void main(String[] args) 
 			throws IOException, NoSuchAlgorithmException, InvalidInputDataException{
 		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_1");
 		UDlanguages.ignore = true;
-		udFactory.trainAllLanguages();
-		udFactory.testAllLanguages();
+//		udFactory.trainAllLanguages();
+//		udFactory.testAllLanguages();
+		udFactory.testIREADlanguages();
 	}
 }

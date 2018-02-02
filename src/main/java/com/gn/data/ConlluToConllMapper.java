@@ -218,7 +218,12 @@ public class ConlluToConllMapper {
 	
 	private static boolean containsmultipleSpanToken(String conllTokenLine) {
 		String[] tokenizedLine = conllTokenLine.split("\t");
-		boolean multipleToken = tokenizedLine[0].contains("-");
+		boolean multipleToken = false;
+		if (tokenizedLine[0].contains("-") ||
+				tokenizedLine[0].contains(".")
+				) {
+			multipleToken = true;
+		}
 		return multipleToken;
 	}
 
