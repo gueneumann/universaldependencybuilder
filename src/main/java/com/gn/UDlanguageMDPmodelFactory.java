@@ -90,7 +90,7 @@ public class UDlanguageMDPmodelFactory {
 	
 	// This is for training and testing for the languages handled in EU project IREAD
 	private void trainIREADlanguages() throws NoSuchAlgorithmException, IOException, InvalidInputDataException {
-		//trainSingleLanguage("English", "en");
+		trainSingleLanguage("English", "en");
 		trainSingleLanguage("German", "de");
 		trainSingleLanguage("Greek", "el");
 		trainSingleLanguage("Spanish", "es");
@@ -120,6 +120,6 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguages.ignore = true;
 //		udFactory.trainAllLanguages();
 //		udFactory.testAllLanguages();
-		udFactory.testIREADlanguages();
+		udFactory.trainSingleLanguage("Finnish-FTB", "fi_ftb");
 	}
 }
