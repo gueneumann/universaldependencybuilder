@@ -75,9 +75,8 @@ public class UDlanguageGNTmodelFactory {
 	
 	private void testAllLanguages(boolean debugTest) throws IOException, ConfigurationException{
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
-		long time1;
-		long time2;
-		time1 = System.currentTimeMillis();
+		long time1 = System.currentTimeMillis();;
+		
 		for (Pair<String, String> language : UDlanguages.languages){
 			System.out.println("Testing of: " + language);
 			GNTperformance gntPerformance = 
@@ -86,14 +85,15 @@ public class UDlanguageGNTmodelFactory {
 			// if several are called for one language. Currently this is just the test file;
 			udPerformance.addNewLanguageGNTperformance(language.getRight(), gntPerformance);
 		}
-		time2 = System.currentTimeMillis();
-		System.out.println("Complete testing for " + UDlanguages.languages.size() + " languages:");
+		long time2 = System.currentTimeMillis();
+		long timeNeeded = (time2 -time1);
+		System.out.println("Time: " +  timeNeeded + "; Complete testing for " + UDlanguages.languages.size() + " languages:");
 		System.out.println(udPerformance.toGNTString());
 	}
 	
 	public static void main(String[] args) throws IOException, ConfigurationException{
-		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("1_3");
-		udFactory.trainAllLanguages();
+		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_1");
+		//udFactory.trainAllLanguages();
 		udFactory.testAllLanguages(false);
 	}
 

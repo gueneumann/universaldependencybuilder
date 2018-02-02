@@ -29,45 +29,43 @@ public class UDlanguages {
 	 */
 	private static void getAllLanguagePairs(String path) {
 		File dir = new File(path);
-	      File[] subdirs = dir.listFiles();
-	      FileFilter subDirFilter = new FileFilter() {
-	         public boolean accept(File file) {
-	            return file.isDirectory();
-	         }
-	      };
-	      subdirs = dir.listFiles(subDirFilter);
-	      
-	      if (subdirs.length == 0) {
-	          System.out.println("Either dir does not exist or is not a directory");
-	       } else {
-	          for (int i = 0; i< subdirs.length; i++) {
-	        	  File filename = subdirs[i];
-	             String languageFullName = filename.getName().split("UD_")[1];
-	             String trainFileSuffix = "-ud-train.conllu";
-	             
-	             FileFilter fileFilter = new FileFilter() {
-	    	         public boolean accept(File file) {
-	    	        	return file.getName().contains(trainFileSuffix);
-	    	         }
-	    	      };
-	    	     File[] subdirFiles = filename.listFiles(fileFilter);
-	             
-	             if (subdirFiles.length > 0) {
-	             String languageID = subdirFiles[0].getName().split(trainFileSuffix)[0];
-	             if (ignore) {
-	            	 if (!ignoreList.contains(languageID)) {
-	            		 languages.add(new Pair<String,String>(languageFullName, languageID));
-	            	 }
-	            	 else
-	            		 System.out.println("Ignoring: " + languageID);
-	             }
-	             else
-	             languages.add(new Pair<String,String>(languageFullName, languageID));
-	             }
-	          }
-	       }
-	      
-	   }
+		File[] subdirs = dir.listFiles();
+		FileFilter subDirFilter = new FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		};
+		subdirs = dir.listFiles(subDirFilter);
+
+		if (subdirs.length == 0) {
+			System.out.println("Either dir does not exist or is not a directory");
+		} else {
+			for (int i = 0; i < subdirs.length; i++) {
+				File filename = subdirs[i];
+				String languageFullName = filename.getName().split("UD_")[1];
+				String trainFileSuffix = "-ud-train.conllu";
+
+				FileFilter fileFilter = new FileFilter() {
+					public boolean accept(File file) {
+						return file.getName().contains(trainFileSuffix);
+					}
+				};
+				File[] subdirFiles = filename.listFiles(fileFilter);
+
+				if (subdirFiles.length > 0) {
+					String languageID = subdirFiles[0].getName().split(trainFileSuffix)[0];
+					if (ignore) {
+						if (!ignoreList.contains(languageID)) {
+							languages.add(new Pair<String, String>(languageFullName, languageID));
+						} else
+							System.out.println("Ignoring: " + languageID);
+					} else
+						languages.add(new Pair<String, String>(languageFullName, languageID));
+				}
+			}
+		}
+
+	}
 
 	public static List<Pair<String, String>> addLanguages() {
 		switch (UDlanguages.version) {
@@ -82,7 +80,7 @@ public class UDlanguages {
 		return languages;
 	}
 
-	// Only used currentlyl in Nemex
+	// Only used currently in Nemex
 	public static void setUdVersion(String udVersion){
 		switch (udVersion){
 		case "1_2": UDlanguages.setVersion_1_2();
@@ -106,9 +104,13 @@ public class UDlanguages {
 	}
 	
 	public static void setVersion_2_1(){
-		ignoreList.add("la_proiel");
+		ignoreList.add("la_proiel"); // causes error in liblinear
 		ignoreList.add("sme"); // has no devel
 		ignoreList.add("ro_nonstandard"); // has no devel
+		ignoreList.add("it_postwita"); // error: feature nodes must be sorted by index in ascending orderhas no devel
+		ignoreList.add("sme"); // only training file -> test not created !
+		ignoreList.add("ar_nyuad"); // NO wordforms !! -> also in UD source format
+		ignoreList.add("fr_ftb"); // NO wordforms !! -> also in UD source format
 		conlluPath = "/local/data/UniversalDependencies/ud-treebanks-v2.1/ud-treebanks-v2.1/";
 		conllPath = "/local/data/UniversalDependencies/conll21/";
 		version = "2_1";	
@@ -120,5 +122,6 @@ public class UDlanguages {
 		for (Pair<String,String> language : languages) {
 			System.out.println(language.toString());
 		}
+		System.out.println("Languages: " + languages.size());
 	}
 }

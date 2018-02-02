@@ -77,7 +77,7 @@ public class UDlanguageMDPmodelFactory {
 
 	public static void main(String[] args) 
 			throws IOException, NoSuchAlgorithmException, InvalidInputDataException{
-		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("1_3");
+		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_1");
 		UDlanguages.ignore = true;
 		udFactory.trainAllLanguages();
 		udFactory.testAllLanguages();
