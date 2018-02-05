@@ -120,6 +120,6 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguages.ignore = true;
 //		udFactory.trainAllLanguages();
 //		udFactory.testAllLanguages();
-		udFactory.trainSingleLanguage("Finnish-FTB", "fi_ftb");
+		udFactory.trainSingleLanguage("Finnish", "fi");
 	}
 }
