@@ -185,14 +185,29 @@ public class ConlluToConllMapper {
 	 * @param mode
 	 * @return
 	 */
-	private  static String makeConlluFileName (String languageName, String languageID, String mode){
+	private static String makeConlluFileName(String languageName, String languageID, String mode) {
 		String fileName = "";
-		if (UDlanguages.version.equals("1_2")){
-			fileName = UDlanguages.conlluPath + "UD_" + languageName + "-master/" + languageID + "-ud-" + mode + ".conllu";
+		switch (UDlanguages.version) {
+		case "1_2":
+			fileName = UDlanguages.conlluPath + "UD_" + languageName + "-master/" + languageID + "-ud-" + mode
+					+ ".conllu";
+			break;
+		case "2_0":
+			if (mode.equals("test")) {
+				fileName = UDlanguages.conlluTestPath + languageID + ".conllu";
+				
+			} 
+			else {
+				fileName = UDlanguages.conlluPath + "UD_" + languageName + "/" + languageID + "-ud-" + mode
+						+ ".conllu";
+			}
+			;
+			break;
+		default:
+			fileName = UDlanguages.conlluPath + "UD_" + languageName + "/" + languageID + "-ud-" + mode + ".conllu";
+			break;
+
 		}
-		else {
-			fileName = UDlanguages.conlluPath + "UD_" + languageName  + "/" + languageID + "-ud-" + mode + ".conllu";
-				}
 		return fileName;
 	}
 
@@ -382,7 +397,7 @@ public class ConlluToConllMapper {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException{
-		UDlanguages.setVersion_2_1();
+		UDlanguages.setVersion_2_0();
 		UDlanguages.addLanguages();
 		runUDversion();
 	}

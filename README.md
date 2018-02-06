@@ -55,6 +55,6 @@ Otherwise, the old corpus and data properties will be used!
 
 - since test data is in separated folder
 
-	- adapt com.gn.data.ConlluToConllMapper.makeConlluFileName(String, String, String)
+	- adapt com.gn.data.ConlluToConllMapper.makeConlluFileName(String, String, String) -> DONE
 
 

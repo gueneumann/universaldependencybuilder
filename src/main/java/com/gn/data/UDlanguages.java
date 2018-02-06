@@ -12,6 +12,7 @@ import de.dfki.mlt.gnt.data.Pair;
 public class UDlanguages {
 
 	public static String conlluPath = null;
+	public static String conlluTestPath = null;
 	public static String conllPath = null;
 	public static String version = null;
 
@@ -73,11 +74,14 @@ public class UDlanguages {
 	public static List<Pair<String, String>> addLanguages() {
 		switch (UDlanguages.version) {
 		case "1_2":
-			setVersion_1_2();
+			setVersion_1_2(); break;
 		case "1_3":
-			setVersion_1_3();
+			setVersion_1_3(); break;
+		case "2_0":
+			setVersion_2_0(); break;
 		case "2_1":
-			setVersion_2_1();
+			setVersion_2_1(); break;
+		default: System.err.println("UD version not known: " + UDlanguages.version); System.exit(0);
 		}
 		UDlanguages.getAllLanguagePairs(conlluPath);
 		sortLanguages();
@@ -101,6 +105,7 @@ public class UDlanguages {
 		switch (udVersion){
 		case "1_2": UDlanguages.setVersion_1_2();
 		case "1_3": UDlanguages.setVersion_1_3();
+		case "2_0": UDlanguages.setVersion_2_0();
 		case "2_1": UDlanguages.setVersion_2_1();
 		}
 	}
@@ -119,6 +124,24 @@ public class UDlanguages {
 		version = "1_3";	
 	}
 	
+	// GN: for shared 2017 data set
+	public static void setVersion_2_0(){
+		ignoreList.add("fr_partut"); // devel does not exist
+		ignoreList.add("ga"); // devel does not exist
+		ignoreList.add("gl_treegal"); // devel does not exist
+		ignoreList.add("it_partut"); // test does not exist
+		ignoreList.add("kk"); // test does not exist
+		ignoreList.add("la"); // devel does not exist
+		ignoreList.add("sl_sst"); // devel does not exist
+		ignoreList.add("ug"); // devel does not exist
+		ignoreList.add("uk"); // devel does not exist
+		
+		conlluPath = "/local/data/UniversalDependencies/conllSharedtask2017/Universal Dependencies 2.0/ud-treebanks-conll2017/";
+		conlluTestPath = "/local/data/UniversalDependencies/ud-test-v2.0-conll2017/gold/conll17-ud-test-2017-05-09/";
+		conllPath = "/local/data/UniversalDependencies/conll20/";
+		version = "2_0";	
+	}
+	
 	public static void setVersion_2_1(){
 		ignoreList.add("ar_nyuad"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
 		ignoreList.add("fr_ftb"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
@@ -129,7 +152,7 @@ public class UDlanguages {
 	}
 	
 	public static void main(String[] args) {
-		version = "2_1";
+		version = "2_0";
 		addLanguages();
 		for (Pair<String,String> language : languages) {
 			System.out.println(language.toString());
