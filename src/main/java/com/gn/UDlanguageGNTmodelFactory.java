@@ -109,9 +109,9 @@ public class UDlanguageGNTmodelFactory {
 	
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_1");
-//		udFactory.trainAllLanguages();
-//		udFactory.testAllLanguages(false);
-		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+		udFactory.trainAllLanguages();
+		udFactory.testAllLanguages(false);
+//		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
 	}
 
 }
