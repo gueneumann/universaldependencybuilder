@@ -16,6 +16,7 @@ public class UDlanguages {
 	public static String version = null;
 
 	public static boolean ignore = true;
+	public static boolean sortLanguageID = true; // if true use language ID else language full name
 	
 	public static List<String> ignoreList = new ArrayList<String>();
 
@@ -60,7 +61,7 @@ public class UDlanguages {
 						if (!ignoreList.contains(languageID)) {
 							languages.add(new Pair<String, String>(languageFullName, languageID));
 						} else
-							System.out.println("Ignoring: " + languageID);
+							System.out.println("Ignoring: " + "<" + languageFullName + " , " + languageID + ">");
 					} else
 						languages.add(new Pair<String, String>(languageFullName, languageID));
 				}
@@ -87,8 +88,8 @@ public class UDlanguages {
 		Collections.sort(languages, new Comparator<Pair<String,String>>() {
             @Override
             public int compare(Pair<String,String> item, Pair<String,String> t1) {
-                String s1 = item.getLeft();
-                String s2 = t1.getLeft();
+                String s1 = (sortLanguageID)?item.getRight():item.getLeft();
+                String s2 = (sortLanguageID)?t1.getRight():t1.getLeft();;
                 return s1.compareToIgnoreCase(s2);
             }
 
@@ -119,13 +120,9 @@ public class UDlanguages {
 	}
 	
 	public static void setVersion_2_1(){
-		ignoreList.add("la_proiel"); // causes error in liblinear
-		ignoreList.add("sme"); // has no devel
-		ignoreList.add("ro_nonstandard"); // has no devel
-		ignoreList.add("it_postwita"); // error: feature nodes must be sorted by index in ascending orderhas no devel
-		ignoreList.add("sme"); // only training file -> test not created !
-		ignoreList.add("ar_nyuad"); // NO wordforms !! -> also in UD source format
-		ignoreList.add("fr_ftb"); // NO wordforms !! -> also in UD source format
+		ignoreList.add("ar_nyuad"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
+		ignoreList.add("fr_ftb"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
+		ignoreList.add("it_postwita"); // GNT error: feature nodes must be sorted by index in ascending order
 		conlluPath = "/local/data/UniversalDependencies/ud-treebanks-v2.1/ud-treebanks-v2.1/";
 		conllPath = "/local/data/UniversalDependencies/conll21/";
 		version = "2_1";	

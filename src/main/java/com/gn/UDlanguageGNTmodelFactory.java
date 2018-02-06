@@ -1,14 +1,18 @@
 package com.gn;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import com.gn.data.ConlluToConllMapper;
 import com.gn.data.UDlanguages;
 import com.gn.performance.GNTperformance;
+import com.gn.performance.MDPperformance;
 import com.gn.performance.UDlanguagePerformance;
 
+import de.bwaldvogel.liblinear.InvalidInputDataException;
+import de.dfki.lt.mdparser.eval.Eval;
 import de.dfki.mlt.gnt.caller.TrainTagger;
 import de.dfki.mlt.gnt.corpus.ConllEvaluator;
 import de.dfki.mlt.gnt.data.Pair;
@@ -73,6 +77,18 @@ public class UDlanguageGNTmodelFactory {
     return new GNTperformance(evaluator);
 	}
 	
+	private void trainSingleLanguage(String language, String languageID) throws IOException, ConfigurationException {
+		this.trainLanguage(language, languageID);
+	}
+	
+	private void testSinglelanguage(String language, String languageID, UDlanguagePerformance udPerformance) throws IOException, ConfigurationException {
+		System.out.println("Testing of: " + language);
+		GNTperformance gntPerformance = testLanguage(language, languageID, false);
+		System.out.println("\n");
+
+		udPerformance.addNewLanguageGNTperformance(languageID, gntPerformance);	
+	}
+	
 	private void testAllLanguages(boolean debugTest) throws IOException, ConfigurationException{
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		long time1 = System.currentTimeMillis();;
@@ -93,8 +109,9 @@ public class UDlanguageGNTmodelFactory {
 	
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_1");
-		udFactory.trainAllLanguages();
-		udFactory.testAllLanguages(false);
+//		udFactory.trainAllLanguages();
+//		udFactory.testAllLanguages(false);
+		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
 	}
 
 }

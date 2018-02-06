@@ -120,6 +120,9 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguages.ignore = true;
 //		udFactory.trainAllLanguages();
 //		udFactory.testAllLanguages();
-		udFactory.trainSingleLanguage("Finnish", "fi");
+		udFactory.testIREADlanguages();
+//		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+//		udFactory.trainSingleLanguage("Romanian-Nonstandard","ro_nonstandard");
+//		udFactory.trainSingleLanguage("North_Sami","sme");
 	}
 }
