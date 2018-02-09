@@ -1,139 +1,62 @@
-Problems:
-
-- currently crashes for
-	- Finish, French 
-		with error:  java.lang.ArrayIndexOutOfBoundsException
-	
-	- eventually a bug in de.dfki.lt.mdparser.features.Alphabet.getIndex2FeatureArray()
-	
-	 	solved by Joerg
-	 	caused by space in some features
-	 		maybe cause by this:
-	 			13	tuomiokirkon	tuomio#kirkko	NOUN	N	Case=Gen|Number=Sing	14	nmod:poss	_	_
-	 			or
-	 			2	information	information	NOUN	_	Gender=Fem|Number=Sing	5	nsubj:pass	_	_
-	 
-
-- missing lexical data base:
-	ignoreList.add("ar_nyuad"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
-		https://github.com/UniversalDependencies/UD_French-FTB/blob/dev/README.md
-	ignoreList.add("fr_ftb"); // NO wordforms !! -> have to obtain lexical data base from somewhere else
-		https://github.com/UniversalDependencies/UD_Arabic-NYUAD/blob/dev/README.md
-
-- missing files:
-	ignoreList.add("sme"); // has no devel
-		copied smalltest to dev
-	ignoreList.add("ro_nonstandard"); // has no devel
-		copied test to dev
-	
-
-Complete training for 72 languages:
-System time (msec): 2029080
--> 33 Minutes
-
-Testing MDP for IREAD languages:
-
-System time (msec): 5272
+Complete testing for 55 languages:
+System time (msec): 46300
 Lang           |  UAS   |  LAS   |  Speed tot. 
 --------------------------------------------
-en             |  84.40 |  81.19 | 
-de             |  78.03 |  71.45 | 
-el             |  84.21 |  80.27 | 
-es             |  84.97 |  81.10 | 
+ar             |  80.31 |  73.81 | 
+bg             |  88.70 |  83.26 | 
+ca             |  86.47 |  82.53 | 
+cs             |  83.18 |  77.24 | 
+cs_cac         |  83.39 |  76.34 | 
+cs_cltt        |  79.40 |  74.50 | 
+cu             |  77.16 |  70.01 | 
+da             |  80.34 |  75.87 | 
+de             |  77.98 |  71.28 | 
+el             |  83.49 |  79.75 | 
+en             |  84.28 |  81.06 | 
+en_lines       |  81.42 |  76.75 | 
+en_partut      |  80.96 |  77.53 | 
+es             |  84.92 |  81.12 | 
+es_ancora      |  85.17 |  80.90 | 
+et             |  76.74 |  65.28 | 
+eu             |  71.54 |  61.97 | 
+fa             |  82.88 |  79.11 | 
+fi             |  76.04 |  67.83 | 
+fi_ftb         |  80.07 |  72.54 | 
+fr             |  83.82 |  80.07 | 
+fr_sequoia     |  85.56 |  82.72 | 
+gl             |  80.40 |  77.97 | 
+got            |  74.95 |  67.16 | 
+grc            |  51.58 |  43.91 | 
+grc_proiel     |  69.03 |  62.77 | 
+he             |  84.11 |  79.38 | 
+hi             |  91.22 |  86.19 | 
+hr             |  80.30 |  73.40 | 
+hu             |  74.74 |  61.84 | 
+id             |  81.00 |  75.94 | 
+it             |  87.63 |  84.20 | 
+ja             |  89.44 |  83.86 | 
+ko             |  67.48 |  60.54 | 
+la_ittb        |  76.33 |  70.69 | 
+la_proiel      |  68.19 |  60.76 | 
+lv             |  68.46 |  59.89 | 
+nl             |  75.75 |  69.82 | 
+nl_lassysmall  |  81.45 |  73.72 | 
+no_bokmaal     |  88.16 |  84.50 | 
+no_nynorsk     |  86.21 |  82.44 | 
+pl             |  88.68 |  82.26 | 
+pt             |  85.14 |  80.72 | 
+pt_br          |  86.63 |  83.94 | 
+ro             |  83.36 |  76.22 | 
+ru             |  79.07 |  72.98 | 
+ru_syntagrus   |  85.60 |  81.69 | 
+sk             |  81.89 |  75.75 | 
+sl             |  85.74 |  81.54 | 
+sv             |  83.84 |  78.98 | 
+sv_lines       |  83.52 |  77.89 | 
+tr             |  61.48 |  50.94 | 
+ur             |  86.79 |  80.17 | 
+vi             |  73.87 |  71.02 | 
+zh             |  77.35 |  74.03 | 
 --------------------------------------------
-Avg            | 82.90 |  78.50
-#Languages: 4
-
-SemEval 2017 best LAS:
-
-el: 87.38
-es: 87.29
-en: 82.23
-de: 80.71
-
-
-Testing: all languages with training files (no .PUD files)
-
-Complete testing for 76 languages:
-System time (msec): 53901
-Lang           |  UAS   |  LAS   |  Speed tot. 
---------------------------------------------
-af             |  84.17 |  80.69 | 
-ar             |  80.25 |  73.74 | 
-be             |  72.07 |  67.22 | 
-bg             |  88.75 |  83.29 | 
-ca             |  86.49 |  82.53 | 
-cop            |  86.42 |  80.21 | 
-cs             |  83.11 |  77.28 | 
-cs_cac         |  83.47 |  76.47 | 
-cs_cltt        |  77.30 |  72.44 | 
-cs_fictree     |  84.06 |  76.61 | 
-cu             |  77.14 |  69.97 | 
-da             |  79.73 |  75.12 | 
-de             |  78.03 |  71.45 | 
-el             |  84.21 |  80.27 | 
-en             |  84.40 |  81.19 | 
-en_lines       |  78.92 |  72.94 | 
-en_partut      |  84.21 |  80.75 | 
-es             |  84.97 |  81.10 | 
-es_ancora      |  85.17 |  80.91 | 
-et             |  79.79 |  70.82 | 
-eu             |  71.59 |  62.06 | 
-fa             |  82.89 |  79.11 | 
-fi             |  76.01 |  67.85 | 
-fi_ftb         |  80.14 |  72.62 | 
-fr             |  83.73 |  79.99 | 
-fr_partut      |  85.29 |  81.41 | 
-fr_sequoia     |  85.57 |  82.69 | 
-ga             |  71.19 |  61.75 | 
-gl             |  80.62 |  78.14 | 
-gl_treegal     |  78.34 |  72.88 | 
-got            |  74.76 |  66.96 | 
-grc            |  51.53 |  43.87 | 
-grc_proiel     |  68.95 |  62.67 | 
-he             |  84.02 |  79.28 | 
-hi             |  91.15 |  86.14 | 
-hr             |  80.25 |  73.43 | 
-hu             |  74.63 |  61.79 | 
-id             |  81.01 |  75.90 | 
-it             |  88.02 |  84.41 | 
-it_partut      |  86.40 |  82.53 | 
-it_postwita    |  81.52 |  75.15 | 
-ja             |  87.06 |  79.80 | 
-kk             |  49.76 |  29.71 | 
-ko             |  67.58 |  60.66 | 
-la             |  48.34 |  35.80 | 
-la_ittb        |  76.55 |  70.87 | 
-la_proiel      |  68.13 |  60.72 | 
-lt             |  54.25 |  44.34 | 
-lv             |  71.87 |  62.98 | 
-mr             |  73.54 |  61.65 | 
-nl             |  79.70 |  73.76 | 
-nl_lassysmall  |  86.31 |  82.05 | 
-no_bokmaal     |  88.20 |  84.48 | 
-no_nynorsk     |  86.22 |  82.49 | 
-pl             |  88.86 |  82.43 | 
-pt             |  85.15 |  80.78 | 
-pt_br          |  86.60 |  83.92 | 
-ro             |  83.34 |  76.18 | 
-ro_nonstandard |  78.05 |  65.48 | 
-ru             |  78.86 |  72.30 | 
-ru_syntagrus   |  86.31 |  82.27 | 
-sk             |  82.26 |  76.16 | 
-sl             |  85.71 |  81.49 | 
-sl_sst         |  67.95 |  59.10 | 
-sme            |  75.65 |  65.12 | 
-sr             |  85.21 |  78.84 | 
-sv             |  83.85 |  78.97 | 
-sv_lines       |  82.06 |  76.31 | 
-swl            |  43.26 |  32.62 | 
-ta             |  75.11 |  65.66 | 
-te             |  90.15 |  76.56 | 
-tr             |  61.39 |  50.92 | 
-uk             |  78.50 |  73.02 | 
-ur             |  86.80 |  80.22 | 
-vi             |  74.01 |  71.16 | 
-zh             |  77.22 |  73.95 | 
---------------------------------------------
-Avg            | 78.61 |  72.08
-#Languages: 76
+Avg            | 80.24 |  74.52
+#Languages: 55

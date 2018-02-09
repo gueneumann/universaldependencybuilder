@@ -116,11 +116,10 @@ public class UDlanguageMDPmodelFactory {
 
 	public static void main(String[] args) 
 			throws IOException, NoSuchAlgorithmException, InvalidInputDataException{
-		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_1");
-		UDlanguages.ignore = true;
-//		udFactory.trainAllLanguages();
-//		udFactory.testAllLanguages();
-		udFactory.testIREADlanguages();
+		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_0");
+		udFactory.trainAllLanguages();
+		udFactory.testAllLanguages();
+//		udFactory.testIREADlanguages();
 //		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
 //		udFactory.trainSingleLanguage("Romanian-Nonstandard","ro_nonstandard");
 //		udFactory.trainSingleLanguage("North_Sami","sme");

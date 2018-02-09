@@ -1,18 +1,14 @@
 package com.gn;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import com.gn.data.ConlluToConllMapper;
 import com.gn.data.UDlanguages;
 import com.gn.performance.GNTperformance;
-import com.gn.performance.MDPperformance;
 import com.gn.performance.UDlanguagePerformance;
 
-import de.bwaldvogel.liblinear.InvalidInputDataException;
-import de.dfki.lt.mdparser.eval.Eval;
 import de.dfki.mlt.gnt.caller.TrainTagger;
 import de.dfki.mlt.gnt.corpus.ConllEvaluator;
 import de.dfki.mlt.gnt.data.Pair;
@@ -30,6 +26,14 @@ import de.dfki.mlt.gnt.tagger.GNTagger;
  */
 public class UDlanguageGNTmodelFactory {
 	
+	private String tagger = "POS";
+	public String getTagger() {
+		return tagger;
+	}
+	public void setTagger(String tagger) {
+		this.tagger = tagger;
+	}
+
 	public UDlanguageGNTmodelFactory(String version){
 		UDlanguages.version = version;
 		UDlanguages.addLanguages();
@@ -37,9 +41,9 @@ public class UDlanguageGNTmodelFactory {
 	
 	private void trainLanguage(String languageName, String languageID)
 	    throws IOException, ConfigurationException{
-		String corpusFilename = ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID);
-		String dataFilename = ConlluToConllMapper.getModelConfigFileName(languageName, languageID);
-		String modelZipFileName = ConlluToConllMapper.getGNTmodelZipFileName(languageName, languageID);
+		String corpusFilename = ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID, tagger);
+		String dataFilename = ConlluToConllMapper.getModelConfigFileName(languageName, languageID, tagger);
+		String modelZipFileName = ConlluToConllMapper.getGNTmodelZipFileName(languageName, languageID, tagger);
 		
 		TrainTagger gntTrainer = new TrainTagger();
 		
@@ -66,8 +70,8 @@ public class UDlanguageGNTmodelFactory {
 	private GNTperformance testLanguage(String languageName, String languageID, boolean debugTest) 
 	    throws IOException, ConfigurationException{
 
-		String corpusFilename = ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID);
-		String modelZipFileName = ConlluToConllMapper.getGNTmodelZipFileName(languageName, languageID);
+		String corpusFilename = ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID, tagger);
+		String modelZipFileName = ConlluToConllMapper.getGNTmodelZipFileName(languageName, languageID, tagger);
 		String testFile = ConlluToConllMapper.getConllTestFile(languageName, languageID);
 		
 		//GNTdataProperties.configTmpFileName = "resources/dataConfig.xml";
@@ -107,11 +111,23 @@ public class UDlanguageGNTmodelFactory {
 		System.out.println(udPerformance.toGNTString());
 	}
 	
+	private void runPOStagger() throws IOException, ConfigurationException {
+		this.setTagger("POS");
+		this.trainAllLanguages();
+		this.testAllLanguages(false);
+		//this.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+	}
+	
+	private void runMorphtagger() throws IOException, ConfigurationException {
+		this.setTagger("MORPH");
+		this.trainAllLanguages();
+		this.testAllLanguages(false);
+		//this.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+	}
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_0");
-		udFactory.trainAllLanguages();
-		udFactory.testAllLanguages(false);
-//		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+		
+		udFactory.runMorphtagger();
 	}
 
 }

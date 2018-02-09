@@ -126,16 +126,19 @@ public class UDlanguages {
 	
 	// GN: for shared 2017 data set
 	public static void setVersion_2_0(){
+		// The 8 small data set
 		ignoreList.add("fr_partut"); // devel does not exist
 		ignoreList.add("ga"); // devel does not exist
 		ignoreList.add("gl_treegal"); // devel does not exist
-		ignoreList.add("it_partut"); // test does not exist
-		ignoreList.add("kk"); // test does not exist
 		ignoreList.add("la"); // devel does not exist
 		ignoreList.add("sl_sst"); // devel does not exist
 		ignoreList.add("ug"); // devel does not exist
 		ignoreList.add("uk"); // devel does not exist
+		ignoreList.add("kk"); // devel does not exist
+		// and this ?
+		ignoreList.add("it_partut"); // test does not exist
 		
+		// remaining 55 languages are the "big" onces (training data larger than devel at -> check)
 		conlluPath = "/local/data/UniversalDependencies/conllSharedtask2017/Universal Dependencies 2.0/ud-treebanks-conll2017/";
 		conlluTestPath = "/local/data/UniversalDependencies/ud-test-v2.0-conll2017/gold/conll17-ud-test-2017-05-09/";
 		conllPath = "/local/data/UniversalDependencies/conll20/";

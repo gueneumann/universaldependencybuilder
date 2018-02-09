@@ -24,24 +24,27 @@ import de.dfki.mlt.gnt.data.Pair;
 
 public class ConlluToConllMapper {
 
-	private static CorpusConfig corpusConfig = new CorpusConfig(new PropertiesConfiguration());
-	private static ModelConfig modelConfig = new ModelConfig(new PropertiesConfiguration());
+	private static CorpusConfig corpusConfigPos = new CorpusConfig(new PropertiesConfiguration());
+	private static ModelConfig modelConfigPos = new ModelConfig(new PropertiesConfiguration());
+	
+	private static CorpusConfig corpusConfigMorph = new CorpusConfig(new PropertiesConfiguration());
+	private static ModelConfig modelConfigMorph = new ModelConfig(new PropertiesConfiguration());
 	
 	/*
 	 * Define file names for corpusProps and dataProps
 	 */
-	public  static String getCorpusConfigFileName(String languageName, String languageID){
-		return UDlanguages.conllPath + languageName + "/" + languageID + ".corpus.conf";
+	public  static String getCorpusConfigFileName(String languageName, String languageID, String tagger){
+		return UDlanguages.conllPath + languageName + "/" + languageID + "." + tagger + ".corpus.conf";
 	}
 	
-	public  static String getModelConfigFileName(String languageName, String languageID){
+	public  static String getModelConfigFileName(String languageName, String languageID, String tagger){
 		return UDlanguages.
-				conllPath + languageName + "/" + languageID + ".model.conf";
+				conllPath + languageName + "/" + languageID + "." + tagger + ".model.conf";
 	}
 	
-	public  static String getGNTmodelZipFileName(String languageName, String languageID){
+	public  static String getGNTmodelZipFileName(String languageName, String languageID, String tagger){
 		return UDlanguages.
-				conllPath + languageName + "/" + languageID + "-GNTmodel.zip";
+				conllPath + languageName + "/" + languageID + "-" + tagger + "model.zip";
 	}
 	
 	public static String getMDPmodelZipFileName(String languageName, String languageID) {
@@ -67,101 +70,97 @@ public class ConlluToConllMapper {
 				conllPath + languageName + "/" + languageID + "-ud-dev.conll";
 	}
 
-	/* Create corpusProp.xml file
-	 * E.g., conll/Arabic/arabicCorpusProps.xml
-	 * -> only used during training
-	 * 
-	 * define it global so that it can be incrementally added with conll and sentence file names
-	 */
-
-
-	/*
-	 * <!-- Tagger name -->
-	<entry key="taggerName">FRUNIPOS</entry>
-
-	<!-- HERE ARE THE MAIN CORPUS BASED SETTINGS -->
-
-	<!-- Corpus access parameters: Index of relevant tags in conll format -->
-	<entry key="wordFormIndex">1</entry>
-	<entry key="posTagIndex">3</entry>
-	 */
-	private static void initLanguageCorpusConfig(String languageID){
-		ConlluToConllMapper.corpusConfig.setProperty(
+	// GNT POS tagger settings
+	private static void initLanguageCorpusConfigPos(String languageID){
+		ConlluToConllMapper.corpusConfigPos.setProperty(
 		    ConfigKeys.TAGGER_NAME, languageID.toUpperCase()+"UNIPOS");
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.WORD_FORM_INDEX, 1);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.TAG_INDEX, 3);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.WORD_FORM_INDEX, 1);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.TAG_INDEX, 3);
 	}
 	
-	private static void writeCorpusConfig(String languageName, String languageID) throws IOException{
+	//NOTE - SAME for ALL languages !
+	private static void initLanguageModelConfigPos(String languageID){
+		ConlluToConllMapper.modelConfigPos.setProperty(
+		    ConfigKeys.TAGGER_NAME, languageID.toUpperCase()+"UNIPOS");
+		// <!-- Liblinear settings -->
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.SOLVER_TYPE, "MCSVM_CS");
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.C, 0.1);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.EPS, 0.3);
+		// <!-- Control parameters -->
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WINDOW_SIZE, 2);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.NUMBER_OF_SENTENCES, -1);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.DIM, 0);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.SUB_SAMPLING_THRESHOLD, 0.000000001);
+		// <!-- features (not) activated -->
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WITH_WORD_FEATS, false);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WITH_SHAPE_FEATS, true);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WITH_SUFFIX_FEATS, true);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WITH_CLUSTER_FEATS, false);
+		ConlluToConllMapper.modelConfigPos.setProperty(ConfigKeys.WITH_LABEL_FEATS, false);
+	}
+
+	private static void writeCorpusConfigPos(String languageName, String languageID) throws IOException{
 		String corpusConfigFileName = 
-		    ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID);
+		    ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID, "POS");
 		try (Writer out = Files.newBufferedWriter(Paths.get(corpusConfigFileName))) {
-		  ConlluToConllMapper.corpusConfig.write(out);
+		  ConlluToConllMapper.corpusConfigPos.write(out);
 		} catch (ConfigurationException e) {
       e.printStackTrace();
     }
 	}
 
-	/* Create dataProps.xml file
-	 * e.g., conll/Arabic/arabicDataProps.xml
-	 * -> will be copied to standard name and packed in archive during training
-	 * -> copy complex model file name to simple model file name like arabic-upos.zip
-	 */
-
-	/*
-	 * Example from FrUniPosTagger.xml
-	 * /GNT/src/main/resources/dataProps/FrUniPosTagger.xml
-
-	 * <entry key="saveModelInputFile">false</entry>
-
-	<!-- Store wrong tag assignment in file resources/eval/*.debug -->
-	<entry key="debug">false</entry>
-
-	<!-- Liblinear settings -->
-	<entry key="solverType">MCSVM_CS</entry>
-	<entry key="c">0.1</entry>
-	<entry key="eps">0.3</entry>
-
-	<!-- Control parameters -->
-	<entry key="windowSize">2</entry>
-	<entry key="numberOfSentences">-1</entry>
-	<entry key="dim">0</entry>
-	<entry key="subSamplingThreshold">0.000000001</entry>
-
-	<!-- features (not) activated -->
-	<entry key="withWordFeats">false</entry>
-	<entry key="withShapeFeats">true</entry>
-	<entry key="withSuffixFeats">true</entry>
-	<entry key="withClusterFeats">false</entry>
-
-	<entry key="WordSuffixFeatureFactory.ngram">false</entry>
-	 */
-
+	private static void writeModelConfigPos(String languageName, String languageID) throws IOException{
+		String modelConfigFileName = ConlluToConllMapper.getModelConfigFileName(languageName, languageID, "POS");
+		try (Writer out = Files.newBufferedWriter(Paths.get(modelConfigFileName))) {
+		  ConlluToConllMapper.modelConfigPos.write(out);
+		} catch (ConfigurationException e) {
+      e.printStackTrace();
+    }
+	}
+	
+	// GNT Morph tagger settings
+	private static void initLanguageCorpusConfigMorph(String languageID){
+		ConlluToConllMapper.corpusConfigMorph.setProperty(
+		    ConfigKeys.TAGGER_NAME, languageID.toUpperCase()+"UNIMORPH");
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.WORD_FORM_INDEX, 1);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.TAG_INDEX, 5);
+	}
+	
 	//NOTE - SAME for ALL languages !
-	private static void initLanguageModelConfig(String languageID){
-		ConlluToConllMapper.modelConfig.setProperty(
-		    ConfigKeys.TAGGER_NAME, languageID.toUpperCase()+"UNIPOS");
+	private static void initLanguageModelConfigMorph(String languageID){
+		ConlluToConllMapper.modelConfigMorph.setProperty(
+		    ConfigKeys.TAGGER_NAME, languageID.toUpperCase()+"UNIMORPH");
 		// <!-- Liblinear settings -->
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.SOLVER_TYPE, "MCSVM_CS");
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.C, 0.1);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.EPS, 0.3);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.SOLVER_TYPE, "MCSVM_CS");
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.C, 0.1);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.EPS, 0.3);
 		// <!-- Control parameters -->
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WINDOW_SIZE, 2);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.NUMBER_OF_SENTENCES, -1);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.DIM, 0);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.SUB_SAMPLING_THRESHOLD, 0.000000001);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WINDOW_SIZE, 2);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.NUMBER_OF_SENTENCES, -1);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.DIM, 0);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.SUB_SAMPLING_THRESHOLD, 0.000000001);
 		// <!-- features (not) activated -->
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WITH_WORD_FEATS, false);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WITH_SHAPE_FEATS, true);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WITH_SUFFIX_FEATS, true);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WITH_CLUSTER_FEATS, false);
-		ConlluToConllMapper.modelConfig.setProperty(ConfigKeys.WITH_LABEL_FEATS, false);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_WORD_FEATS, false);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_SHAPE_FEATS, true);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_SUFFIX_FEATS, true);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_CLUSTER_FEATS, false);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_LABEL_FEATS, false);
 	}
 
-	private static void writeModelConfig(String languageName, String languageID) throws IOException{
-		String modelConfigFileName = ConlluToConllMapper.getModelConfigFileName(languageName, languageID);
+	private static void writeCorpusConfigMorph(String languageName, String languageID) throws IOException{
+		String corpusConfigFileName = 
+		    ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID, "MORPH");
+		try (Writer out = Files.newBufferedWriter(Paths.get(corpusConfigFileName))) {
+		  ConlluToConllMapper.corpusConfigMorph.write(out);
+		} catch (ConfigurationException e) {
+      e.printStackTrace();
+    }
+	}
+
+	private static void writeModelConfigMorph(String languageName, String languageID) throws IOException{
+		String modelConfigFileName = ConlluToConllMapper.getModelConfigFileName(languageName, languageID, "MORPH");
 		try (Writer out = Files.newBufferedWriter(Paths.get(modelConfigFileName))) {
-		  ConlluToConllMapper.modelConfig.write(out);
+		  ConlluToConllMapper.modelConfigMorph.write(out);
 		} catch (ConfigurationException e) {
       e.printStackTrace();
     }
@@ -343,8 +342,10 @@ public class ConlluToConllMapper {
 		String conlluFile = ConlluToConllMapper.makeConlluFileName(languageName, languageID, "train");
 		String conllFile = ConlluToConllMapper.makeConllFileName(languageName, languageID, "train");
 		String sentFile = ConlluToConllMapper.makeSentenceFileName(conllFile);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.TRAINING_LABELED_DATA, conllFile);	
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.TRAINING_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.TRAINING_LABELED_DATA, conllFile);	
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.TRAINING_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.TRAINING_LABELED_DATA, conllFile);	
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.TRAINING_UNLABELED_DATA, sentFile);
 
 		ConlluToConllMapper.transformConlluToConllFile(conlluFile, conllFile);
 		ConlluToConllMapper.transcodeConllToSentenceFile(conllFile, sentFile);
@@ -354,8 +355,10 @@ public class ConlluToConllMapper {
 		String conlluFile = ConlluToConllMapper.makeConlluFileName(languageName, languageID, "dev");
 		String conllFile = ConlluToConllMapper.makeConllFileName(languageName, languageID, "dev");
 		String sentFile = ConlluToConllMapper.makeSentenceFileName(conllFile);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.DEV_LABELED_DATA, conllFile);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.DEV_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.DEV_LABELED_DATA, conllFile);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.DEV_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.DEV_LABELED_DATA, conllFile);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.DEV_UNLABELED_DATA, sentFile);
 
 		ConlluToConllMapper.transformConlluToConllFile(conlluFile, conllFile);
 		ConlluToConllMapper.transcodeConllToSentenceFile(conllFile, sentFile);
@@ -365,8 +368,10 @@ public class ConlluToConllMapper {
 		String conlluFile = ConlluToConllMapper.makeConlluFileName(languageName, languageID, "test");
 		String conllFile = ConlluToConllMapper.makeConllFileName(languageName, languageID, "test");
 		String sentFile = ConlluToConllMapper.makeSentenceFileName(conllFile);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.TEST_LABELED_DATA, conllFile);
-		ConlluToConllMapper.corpusConfig.setProperty(ConfigKeys.TEST_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.TEST_LABELED_DATA, conllFile);
+		ConlluToConllMapper.corpusConfigPos.setProperty(ConfigKeys.TEST_UNLABELED_DATA, sentFile);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.TEST_LABELED_DATA, conllFile);
+		ConlluToConllMapper.corpusConfigMorph.setProperty(ConfigKeys.TEST_UNLABELED_DATA, sentFile);
 
 		ConlluToConllMapper.transformConlluToConllFile(conlluFile, conllFile);
 		ConlluToConllMapper.transcodeConllToSentenceFile(conllFile, sentFile);
@@ -381,13 +386,17 @@ public class ConlluToConllMapper {
 	public static void runUDversion() throws IOException{
 		for (Pair<String, String> language : UDlanguages.languages){
 			System.out.println("Processing: " + language);
-			initLanguageCorpusConfig(language.getRight());
-			initLanguageModelConfig(language.getRight());
+			initLanguageCorpusConfigPos(language.getRight());
+			initLanguageModelConfigPos(language.getRight());
+			initLanguageCorpusConfigMorph(language.getRight());
+			initLanguageModelConfigMorph(language.getRight());
 
 			transformer(language.getLeft(), language.getRight());
 
-			writeCorpusConfig(language.getLeft(), language.getRight());
-			writeModelConfig(language.getLeft(), language.getRight());
+			writeCorpusConfigPos(language.getLeft(), language.getRight());
+			writeModelConfigPos(language.getLeft(), language.getRight());
+			writeCorpusConfigMorph(language.getLeft(), language.getRight());
+			writeModelConfigMorph(language.getLeft(), language.getRight());
 		}
 	}
 
