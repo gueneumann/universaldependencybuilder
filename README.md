@@ -114,4 +114,24 @@ Done
 		Morph		 -> CRASHES
 			for language Czech -> 
 			Exception in thread "main" java.lang.IllegalArgumentException: 'number of classes' * 'number of instances' is too large: 2487*1826516
+		
+## Morph tagger
 
+- run it for iREAD languages first
+- integrate into MunderLine
+
+- then
+
+	create liblinear file
+	run liblinear to train model
+	integrate into to resulting ZIP file
+
+## Use conll-2017 eval script
+
+	from:	./conll17_ud_eval.py -v ../../conll20/German/de-ud-test.conll ../../conll20/German/de-ud-test.conll
+	call it: ./conll17_ud_eval.py -v ../../conll20/German/de-ud-test.conll ../../conll20/German/de-ud-test.conll
+	
+### In order to use it as part of my UniversalDependencyBuilder
+
+	Create conll-gn output file for predicted tasks
+		- merge results for POS tagger, morphology, dependency parser

@@ -54,6 +54,9 @@ public class UDlanguageGNTmodelFactory {
 		gntTrainer.trainer(dataFilename, corpusFilename, modelZipFileName);
 	}
 	
+	private void trainSingleLanguage(String language, String languageID) throws IOException, ConfigurationException {
+		this.trainLanguage(language, languageID);
+	}
 	private void trainAllLanguages() throws IOException, ConfigurationException{
 		long time1;
 		long time2;
@@ -81,11 +84,7 @@ public class UDlanguageGNTmodelFactory {
     return new GNTperformance(evaluator);
 	}
 	
-	private void trainSingleLanguage(String language, String languageID) throws IOException, ConfigurationException {
-		this.trainLanguage(language, languageID);
-	}
-	
-	private void testSinglelanguage(String language, String languageID, UDlanguagePerformance udPerformance) throws IOException, ConfigurationException {
+	private void testSingleLanguage(String language, String languageID, UDlanguagePerformance udPerformance) throws IOException, ConfigurationException {
 		System.out.println("Testing of: " + language);
 		GNTperformance gntPerformance = testLanguage(language, languageID, false);
 		System.out.println("\n");
@@ -119,10 +118,11 @@ public class UDlanguageGNTmodelFactory {
 	}
 	
 	private void runMorphtagger() throws IOException, ConfigurationException {
+		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("MORPH");
-		this.trainAllLanguages();
-		this.testAllLanguages(false);
-		//this.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+//		this.trainAllLanguages();
+//		this.testAllLanguages(false);
+		this.testSingleLanguage("Arabic","ar",udPerformance);
 	}
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_0");
