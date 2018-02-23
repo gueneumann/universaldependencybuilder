@@ -76,6 +76,7 @@ public class UDlanguageGNTmodelFactory {
 		String corpusFilename = ConlluToConllMapper.getCorpusConfigFileName(languageName, languageID, tagger);
 		String modelZipFileName = ConlluToConllMapper.getGNTmodelZipFileName(languageName, languageID, tagger);
 		String testFile = ConlluToConllMapper.getConllTestFile(languageName, languageID);
+		String taggerResultFile = ConlluToConllMapper.getConllGNTresultFile(testFile, tagger);
 		
 		//GNTdataProperties.configTmpFileName = "resources/dataConfig.xml";
 		GNTagger tagger = new GNTagger(modelZipFileName);
@@ -90,10 +91,14 @@ public class UDlanguageGNTmodelFactory {
 		 * - call tagger
 		 * - create copied corpusFilePredicted using tags from GNT tagger
 		 * - call it kind of POS_result
+		 * - take care that it also works for MorphTagger
+		 * 		- should work because of used static tagger value
 		 * Need to define a new eval function for tagger
 		 * can then also be used as input for testing MDPparser
 		 */
-    ConllEvaluator evaluator = tagger.eval(corpusFilename);
+    //ConllEvaluator evaluator = tagger.eval(corpusFilename);
+    
+    ConllEvaluator evaluator = tagger.evalAndWriteResultFile(corpusFilename, testFile, taggerResultFile);
     
     return new GNTperformance(evaluator);
 	}
@@ -125,10 +130,11 @@ public class UDlanguageGNTmodelFactory {
 	}
 	
 	private void runPOStagger() throws IOException, ConfigurationException {
+		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("POS");
-		this.trainAllLanguages();
-		this.testAllLanguages(false);
-		//this.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
+//		this.trainAllLanguages();
+//		this.testAllLanguages(false);
+		this.testSingleLanguage("German","de", udPerformance);
 	}
 	
 	private void runMorphtagger() throws IOException, ConfigurationException {

@@ -140,24 +140,43 @@ In order to use it as part of my UniversalDependencyBuilder
 		- merge results for POS tagger, morphology
 		- for dependency parser I already have it
 
-### GNT tagger
+## GNT tagger
 
 Adapt method com.gn.UDlanguageGNTmodelFactory.testLanguage(String, String, boolean)
 
 - should call tagger sentence-wise on test file
 - should copy test file to result file
-	- USE poas tag form tagger
+	- USE pos tag form tagger
 	- keep all other information
 
 - Make it work for POS and Morphology
 
-NOTE:
+	- de.dfki.mlt.gnt.tagger.GNTagger.createConllResultFileFromEvalFile(int, Path, String, String)
+	
+			basically takes evalFile created by GNT and merges output of tagger with test file
+			
+			called from de.dfki.mlt.gnt.tagger.GNTagger.evalAndWriteResultFile(String, String, String) and then from UDlanguage GNT factory
+			
+	- can be used for POS tagger and MorphTagger by setting com.gn.UDlanguageGNTmodelFactory.tagger
 
 - if this works, this can also be used as input for MDParser
 		
 		Testing of MDParser based on GNT POS predictions
+		
+### First tests with German POS
 
-### MDParser
+
+conll17_ud_eval.py -v de-ud-test.conll de-ud-test-POS-result.conll 
+
+		get same accuracy as my own script
+		
+### First tests with Arabic MORPH
+
+conll17_ud_eval.py -v ar-ud-test.conll ar-ud-test-MORPH-result.conll 
+
+		get same accuracy as my own script
+
+## MDParser
 
 For MDP parser is automatically done as part of de.dfki.lt.mdparser.caller.MDPrunner.parseAndEvalConllFile(String, String, String)
 

@@ -56,6 +56,10 @@ public class ConlluToConllMapper {
 		return testFile.split("\\.conll")[0]+"-result.conll";
 	}
 	
+	public static String getConllGNTresultFile(String testFile, String tagger) {
+		return testFile.split("\\.conll")[0]+"-"+tagger+"-result.conll";
+	}
+	
 	public static String getConllTrainFile(String languageName, String languageID) {
 		return UDlanguages.
 				conllPath + languageName + "/" + languageID + "-ud-train.conll";
