@@ -11,6 +11,7 @@ import com.gn.performance.UDlanguagePerformance;
 import de.bwaldvogel.liblinear.InvalidInputDataException;
 import de.dfki.lt.mdparser.caller.MDPrunner;
 import de.dfki.lt.mdparser.eval.Eval;
+import de.dfki.lt.mdparser.parser.ConllUtils;
 import de.dfki.lt.mdparser.parser.Trainer;
 import de.dfki.mlt.gnt.data.Pair;
 
@@ -117,11 +118,10 @@ public class UDlanguageMDPmodelFactory {
 	public static void main(String[] args) 
 			throws IOException, NoSuchAlgorithmException, InvalidInputDataException{
 		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_0");
+		ConllUtils.infosize = 10;
+		
 		udFactory.trainAllLanguages();
 		udFactory.testAllLanguages();
-//		udFactory.testIREADlanguages();
-//		udFactory.trainSingleLanguage("Italian-PoSTWITA","it_postwita");
-//		udFactory.trainSingleLanguage("Romanian-Nonstandard","ro_nonstandard");
-//		udFactory.trainSingleLanguage("North_Sami","sme");
+		
 	}
 }

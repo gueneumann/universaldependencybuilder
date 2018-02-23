@@ -79,6 +79,20 @@ public class UDlanguageGNTmodelFactory {
 		
 		//GNTdataProperties.configTmpFileName = "resources/dataConfig.xml";
 		GNTagger tagger = new GNTagger(modelZipFileName);
+		
+		//TODO
+		
+		//HIERIX
+		
+		/*
+		 * Has to be updated to support conll2017 script:
+		 * - process corpusFile
+		 * - call tagger
+		 * - create copied corpusFilePredicted using tags from GNT tagger
+		 * - call it kind of POS_result
+		 * Need to define a new eval function for tagger
+		 * can then also be used as input for testing MDPparser
+		 */
     ConllEvaluator evaluator = tagger.eval(corpusFilename);
     
     return new GNTperformance(evaluator);
