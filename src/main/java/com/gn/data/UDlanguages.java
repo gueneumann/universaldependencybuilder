@@ -138,6 +138,8 @@ public class UDlanguages {
 		// and this ?
 		ignoreList.add("it_partut"); // test does not exist
 		
+	
+		
 		// remaining 55 languages are the "big" onces (training data larger than devel at -> check)
 		conlluPath = "/local/data/UniversalDependencies/conllSharedtask2017/Universal Dependencies 2.0/ud-treebanks-conll2017/";
 		conlluTestPath = "/local/data/UniversalDependencies/ud-test-v2.0-conll2017/gold/conll17-ud-test-2017-05-09/";

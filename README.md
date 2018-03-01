@@ -120,11 +120,21 @@ Done
 - run it for iREAD languages first
 - integrate into MunderLinede.dfki.lt.mdparser.parser.ConllUtils.readConllFile(String, boolean)
 
-- then
+- Then, I think following can work
 
 	create liblinear file
+		run gnt.conf file with create.liblinear.input.file = true 
+		or make sure a different global gnt.conf can be selected
+		make sure that the liblinear input files are stored in a temp-dir so that they can be deleted later
+		NOTE: this will already create zip file XY-MORPHmodel.zip, but without the liblinear file
+			update: de.dfki.mlt.gnt.trainer.TrainerInMem.trainFromConllTrainingFilesInMemory(List<String>, int, int, int)
 	run liblinear to train model
+		train -s 4 -c 0.1 -e 0.3 liblinear_input_model_CSUNIMORPH_2_0iw-1sent_FTTFF_MCSVM_CS.txt model_CSUNIMORPH_2_0iw-1sent_FTTFF_MCSVM_CS.txt
+	
+	OOOHHH: liblinear crashs - file to big ? -> OK, then test language-wise
+		
 	integrate into to resulting ZIP file
+	
 
 ## Use conll-2017 eval script
 
@@ -163,12 +173,15 @@ Adapt method com.gn.UDlanguageGNTmodelFactory.testLanguage(String, String, boole
 		
 		Testing of MDParser based on GNT POS predictions
 		
-### First tests with German POS
+### First tests
 
 
 conll17_ud_eval.py -v de-ud-test.conll de-ud-test-POS-result.conll 
 
 		get same accuracy as my own script
+		
+		seems to be the case for all languages
+		
 		
 ### First tests with Arabic MORPH
 
