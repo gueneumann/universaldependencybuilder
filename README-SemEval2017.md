@@ -33,33 +33,39 @@
 - since test data is in separated folder
 
 	- adapt com.gn.data.ConlluToConllMapper.makeConlluFileName(String, String, String) -> DONE
-	
+
+## Used files
+
+Currently, only the 55 big treebank languages are used, because 
+8 small language do not have development data (can be solved), and surprise language do not have training data.
+
+		// The 8 small data set
+		ignoreList.add("fr_partut"); // devel does not exist
+		ignoreList.add("ga"); // devel does not exist
+		ignoreList.add("gl_treegal"); // devel does not exist
+		ignoreList.add("la"); // devel does not exist
+		ignoreList.add("sl_sst"); // devel does not exist
+		ignoreList.add("ug"); // devel does not exist
+		ignoreList.add("uk"); // devel does not exist
+		ignoreList.add("kk"); // devel does not exist
+		// Ignore because has no test data - also done challenge
+		ignoreList.add("it_partut"); // test does not exist
+
 ## Testing for 55 big treebank languages
-	
-		POS tagging -> DONE
-		MDP parsing -> DONE
-		Morph		 -> CRASHES
-			for language Czech -> 
-			Exception in thread "main" java.lang.IllegalArgumentException: 'number of classes' * 'number of instances' is too large: 2487*1826516
+
+POS tagging -> DONE
 		
-### Morph tagger
+MDP parsing -> DONE
 
-- run it for iREAD languages first
-- integrate into MunderLinede.dfki.lt.mdparser.parser.ConllUtils.readConllFile(String, boolean)
-
-- Then, I think following can work
-
-	create liblinear file
-		run gnt.conf file with create.liblinear.input.file = true 
-		or make sure a different global gnt.conf can be selected
-		make sure that the liblinear input files are stored in a temp-dir so that they can be deleted later
-		NOTE: this will already create zip file XY-MORPHmodel.zip, but without the liblinear file
-			update: de.dfki.mlt.gnt.trainer.TrainerInMem.trainFromConllTrainingFilesInMemory(List<String>, int, int, int)
-	run liblinear to train model
-		train -s 4 -c 0.1 -e 0.3 liblinear_input_model_CSUNIMORPH_2_0iw-1sent_FTTFF_MCSVM_CS.txt model_CSUNIMORPH_2_0iw-1sent_FTTFF_MCSVM_CS.txt
-	
-	OOOHHH: liblinear crashs - file to big ? -> OK, then test language-wise
+Morph		 -> DONE for 48/ of the 55 languages
 		
-	integrate into to resulting ZIP file
+		UDlanguageGNTmodelFactory.ignoreList.add("cs"); // liblinear crashes -> too large input file ?
+		UDlanguageGNTmodelFactory.ignoreList.add("cs_cac"); // liblinear crashes -> too large input file ?
+		UDlanguageGNTmodelFactory.ignoreList.add("fi"); // too small java heap (16GB)
+		UDlanguageGNTmodelFactory.ignoreList.add("ru_syntagrus"); // too small java heap  (16GB)
+		
+		UDlanguageGNTmodelFactory.ignoreList.add("en_lines"); // no morphology
+		UDlanguageGNTmodelFactory.ignoreList.add("ja"); // no morphology
+		UDlanguageGNTmodelFactory.ignoreList.add("sv_lines"); // no morphology
 	
 	
