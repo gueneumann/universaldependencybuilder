@@ -148,7 +148,7 @@ public class ConlluToConllMapper {
 		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_SHAPE_FEATS, true);
 		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_SUFFIX_FEATS, true);
 		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_CLUSTER_FEATS, false);
-		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_LABEL_FEATS, false);
+		ConlluToConllMapper.modelConfigMorph.setProperty(ConfigKeys.WITH_LABEL_FEATS, true);
 	}
 
 	private static void writeCorpusConfigMorph(String languageName, String languageID) throws IOException{

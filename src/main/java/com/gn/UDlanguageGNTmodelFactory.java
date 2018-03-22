@@ -124,7 +124,7 @@ public class UDlanguageGNTmodelFactory {
 	private void runPOStagger() throws IOException, ConfigurationException {
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("POS");
-//		this.trainAllLanguages();
+		this.trainAllLanguages();
 		this.testAllLanguages(false);
 //		this.testSingleLanguage("German","de", udPerformance);
 	}
@@ -136,6 +136,10 @@ public class UDlanguageGNTmodelFactory {
 		UDlanguageGNTmodelFactory.ignoreList.add("cs_cac"); // liblinear crashes -> too large input file ?
 		UDlanguageGNTmodelFactory.ignoreList.add("fi"); // too small java heap (16GB)
 		UDlanguageGNTmodelFactory.ignoreList.add("ru_syntagrus"); // too small java heap  (16GB)
+		
+		UDlanguageGNTmodelFactory.ignoreList.add("en_lines"); // no morphology
+		UDlanguageGNTmodelFactory.ignoreList.add("ja"); // no morphology
+		UDlanguageGNTmodelFactory.ignoreList.add("sv_lines"); // no morphology
 		
 		this.setTagger("MORPH");
 		
