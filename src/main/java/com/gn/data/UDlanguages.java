@@ -28,7 +28,7 @@ public class UDlanguages {
 	 * and collect all language. languageID pairs.
 	 * It will do only for those grammars which have train, devel, and test CONLLU files.
 	 * All others are ignored.
-	 * We will do so, as a starter for mapping them to our conll-x format and for creating GNT and MDP cofnig files.
+	 * We will do so, as a starter for mapping them to our conll-gn format and for creating GNT and MDP config files.
 	 * @param path
 	 */
 	private static void getAllLanguagePairs(String path) {
@@ -135,7 +135,7 @@ public class UDlanguages {
 		ignoreList.add("ug"); // devel does not exist
 		ignoreList.add("uk"); // devel does not exist
 		ignoreList.add("kk"); // devel does not exist
-		// and this ?
+		// Ignore because has no test data - also done challenge
 		ignoreList.add("it_partut"); // test does not exist
 		
 	
@@ -162,6 +162,8 @@ public class UDlanguages {
 		for (Pair<String,String> language : languages) {
 			System.out.println(language.toString());
 		}
-		System.out.println("Languages: " + languages.size());
+		System.out.println("Total Languages: " + (languages.size() + ignoreList.size()));
+		System.out.println("Accepted Languages: " + languages.size());
+		System.out.println("Ignored Languages: " + ignoreList.size());
 	}
 }
