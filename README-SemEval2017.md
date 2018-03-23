@@ -53,11 +53,11 @@ Currently, only the 55 big treebank languages are used, because
 
 ## Testing for 55 big treebank languages
 
-POS tagging -> DONE
+### POS tagging -> DONE
 		
-MDP parsing -> DONE
+### MDP parsing -> DONE
 
-Morph		 -> DONE for 48/ of the 55 languages
+### Morph		 -> DONE for 48/ of the 55 languages
 		
 		UDlanguageGNTmodelFactory.ignoreList.add("cs"); // liblinear crashes -> too large input file ?
 		UDlanguageGNTmodelFactory.ignoreList.add("cs_cac"); // liblinear crashes -> too large input file ?
@@ -68,4 +68,22 @@ Morph		 -> DONE for 48/ of the 55 languages
 		UDlanguageGNTmodelFactory.ignoreList.add("ja"); // no morphology
 		UDlanguageGNTmodelFactory.ignoreList.add("sv_lines"); // no morphology
 	
+## Processing Raw Text Files
+
+How can I learn tokenization and sentence boundary rules ?
+
+Initial approach
+
+- run simple GntSimpleTokenizer and GntMorphixTokenizer and create conll-u output file
 	
+	eventually update them first with sentence punctuation signs from data 
+	
+	this should be similar to the baseline tokenizer of UDPipe
+
+- evaluate it with script
+
+- this gives an indication about performance
+
+- Then develop a trainable tokenizer
+
+	/gnt/doc/GntTextSegmentizer.txt for more details

@@ -12,7 +12,7 @@ Core idea using English development data as reference:
 		
 		to define online an ordering over the content words of a sentence, which  defines the their tree level
 		
-		define function words as heads
+		define function words as modifiers
 		
 			AUX, DET, SCONJ -> right-attaching
 			
@@ -20,11 +20,11 @@ Core idea using English development data as reference:
 			
 			OTHERS -> no constraints
 			
-			IF last token(sent)=PUNCT -> attach it mainb predicate
+			IF last token(sent)=PUNCT -> attach it to main predicate
 		
 		define online direction of ADP based on bigrams in sentence
 		
-Parsing assume PS-tagged as input.
+Parsing assumes POS-tagged input.
 
 Only unlabeled UD trees are computed
 
@@ -59,6 +59,8 @@ VERB −→ PROPN, PRON, SCONJ
 	- do it for each individual languages
 	
 		- compute some sort of TF/IDF for head rules
+		
+		- distinguish head direction
 		
 - find alternative approach for sorting content words
 
