@@ -68,7 +68,8 @@ public class UDlanguageMDPmodelFactory {
 			System.out.println("\n");
 
 			MDPperformance mdpPerformance = new MDPperformance(eval);
-			udPerformance.addNewLanguageMDPperformance(language.getRight(), mdpPerformance);
+			String s1 = (UDlanguages.sortLanguageID)?language.getRight():language.getLeft();
+			udPerformance.addNewLanguageMDPperformance(s1, mdpPerformance);
 		}
 		time2 = System.currentTimeMillis();
 		System.out.println("Complete testing for " + UDlanguages.languages.size() + " languages:");
@@ -120,7 +121,7 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_0");
 		ConllUtils.infosize = 10;
 		
-		udFactory.trainAllLanguages();
+		//udFactory.trainAllLanguages();
 		udFactory.testAllLanguages();
 		
 	}

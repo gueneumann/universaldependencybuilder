@@ -112,7 +112,9 @@ public class UDlanguageGNTmodelFactory {
 			    this.testLanguage(language.getLeft(), language.getRight(), debugTest);
 			// NOTE: will only use values from last call of corpus.EvalConllFile.computeAccuracy(String, boolean)
 			// if several are called for one language. Currently this is just the test file;
-			udPerformance.addNewLanguageGNTperformance(language.getRight(), gntPerformance);
+
+			String s1 = (UDlanguages.sortLanguageID)?language.getRight():language.getLeft();
+			udPerformance.addNewLanguageGNTperformance(s1, gntPerformance);
 			}
 		}
 		long time2 = System.currentTimeMillis();
@@ -124,7 +126,7 @@ public class UDlanguageGNTmodelFactory {
 	private void runPOStagger() throws IOException, ConfigurationException {
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("POS");
-		this.trainAllLanguages();
+//		this.trainAllLanguages();
 		this.testAllLanguages(false);
 //		this.testSingleLanguage("German","de", udPerformance);
 	}
@@ -151,7 +153,7 @@ public class UDlanguageGNTmodelFactory {
 	public static void main(String[] args) throws IOException, ConfigurationException{
 		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_0");
 		
-		udFactory.runMORPHtagger();
+		udFactory.runPOStagger();
 	}
 
 }

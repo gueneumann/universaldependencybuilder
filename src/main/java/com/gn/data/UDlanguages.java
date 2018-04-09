@@ -17,7 +17,7 @@ public class UDlanguages {
 	public static String version = null;
 
 	public static boolean ignore = true;
-	public static boolean sortLanguageID = true; // if true use language ID else language full name
+	public static boolean sortLanguageID = false; // if true use language ID else language full name
 	
 	public static List<String> ignoreList = new ArrayList<String>();
 
