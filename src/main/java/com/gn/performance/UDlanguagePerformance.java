@@ -86,7 +86,7 @@ public class UDlanguagePerformance {
 		
 		output +=       "--------------------------------------------\n";
 		// Compute average values
-		output += StringUtils.rightPad("Avg", paddingString, ' ') + " | " + formatter.format((avgUnAcc / mdpLanguagesPerformance.size())*100) + 
+		output += StringUtils.rightPad("Avg", paddingString, ' ') + " |  " + formatter.format((avgUnAcc / mdpLanguagesPerformance.size())*100) + 
 				" |  " + formatter.format((avgLabAcc / mdpLanguagesPerformance.size())*100);
 		output += "\n#Languages: "+ mdpLanguagesPerformance.size();
 		return output;

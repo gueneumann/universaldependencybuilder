@@ -60,3 +60,68 @@ zh             |  77.35 |  74.03 |
 --------------------------------------------
 Avg            | 80.24 |  74.52
 #Languages: 55
+
+Language full name ordering:
+
+Complete testing for 55 languages:
+System time (msec): 48397
+Lang                 |  UAS   |  LAS   |  Speed tot. 
+--------------------------------------------
+Ancient_Greek        |  51.51 |  43.84 | 
+Ancient_Greek-PROIEL |  69.06 |  62.81 | 
+Arabic               |  80.26 |  73.77 | 
+Basque               |  71.52 |  62.03 | 
+Bulgarian            |  88.74 |  83.31 | 
+Catalan              |  86.51 |  82.55 | 
+Chinese              |  77.15 |  73.83 | 
+Croatian             |  80.25 |  73.41 | 
+Czech                |  83.16 |  77.22 | 
+Czech-CAC            |  83.34 |  76.36 | 
+Czech-CLTT           |  79.57 |  74.55 | 
+Danish               |  80.29 |  75.86 | 
+Dutch                |  75.71 |  69.74 | 
+Dutch-LassySmall     |  81.40 |  73.73 | 
+English              |  84.24 |  81.03 | 
+English-LinES        |  81.39 |  76.78 | 
+English-ParTUT       |  80.53 |  77.18 | 
+Estonian             |  76.66 |  65.16 | 
+Finnish              |  76.04 |  67.84 | 
+Finnish-FTB          |  80.03 |  72.53 | 
+French               |  83.88 |  80.15 | 
+French-Sequoia       |  85.69 |  82.85 | 
+Galician             |  80.33 |  77.87 | 
+German               |  78.07 |  71.35 | 
+Gothic               |  74.65 |  66.87 | 
+Greek                |  83.79 |  79.93 | 
+Hebrew               |  84.06 |  79.34 | 
+Hindi                |  91.22 |  86.19 | 
+Hungarian            |  74.74 |  61.84 | 
+Indonesian           |  81.00 |  75.94 | 
+Italian              |  87.63 |  84.20 | 
+Japanese             |  89.44 |  83.86 | 
+Korean               |  67.48 |  60.54 | 
+Latin-ITTB           |  76.33 |  70.69 | 
+Latin-PROIEL         |  68.19 |  60.76 | 
+Latvian              |  68.46 |  59.89 | 
+Norwegian-Bokmaal    |  88.16 |  84.50 | 
+Norwegian-Nynorsk    |  86.21 |  82.44 | 
+Old_Church_Slavonic  |  77.16 |  70.01 | 
+Persian              |  82.88 |  79.11 | 
+Polish               |  88.68 |  82.26 | 
+Portuguese           |  85.14 |  80.72 | 
+Portuguese-BR        |  86.63 |  83.94 | 
+Romanian             |  83.36 |  76.22 | 
+Russian              |  79.07 |  72.98 | 
+Russian-SynTagRus    |  85.60 |  81.69 | 
+Slovak               |  81.89 |  75.75 | 
+Slovenian            |  85.74 |  81.54 | 
+Spanish              |  84.92 |  81.12 | 
+Spanish-AnCora       |  85.17 |  80.90 | 
+Swedish              |  83.84 |  78.98 | 
+Swedish-LinES        |  83.52 |  77.89 | 
+Turkish              |  61.48 |  50.94 | 
+Urdu                 |  86.79 |  80.17 | 
+Vietnamese           |  73.87 |  71.02 | 
+--------------------------------------------
+Avg                  |  80.23 |  74.51
+#Languages: 55
