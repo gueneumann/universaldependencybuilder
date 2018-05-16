@@ -46,9 +46,11 @@ public class UDlanguages {
 		} else {
 			for (int i = 0; i < subdirs.length; i++) {
 				File filename = subdirs[i];
+				
 				String languageFullName = filename.getName().split("UD_")[1];
-				String trainFileSuffix = "-ud-train.conllu";
-
+				String trainFileSuffix = "-ud-train.conll";
+				
+				
 				FileFilter fileFilter = new FileFilter() {
 					public boolean accept(File file) {
 						return file.getName().contains(trainFileSuffix);
@@ -81,6 +83,8 @@ public class UDlanguages {
 			setVersion_2_0(); break;
 		case "2_1":
 			setVersion_2_1(); break;
+		case "iread":
+			setVersion_iread(); break;
 		default: System.err.println("UD version not known: " + UDlanguages.version); System.exit(0);
 		}
 		UDlanguages.getAllLanguagePairs(conlluPath);
@@ -107,6 +111,7 @@ public class UDlanguages {
 		case "1_3": UDlanguages.setVersion_1_3();
 		case "2_0": UDlanguages.setVersion_2_0();
 		case "2_1": UDlanguages.setVersion_2_1();
+		case "iread": UDlanguages.setVersion_iread();
 		}
 	}
 
@@ -156,8 +161,14 @@ public class UDlanguages {
 		version = "2_1";	
 	}
 	
+	public static void setVersion_iread(){
+		conlluPath = "/local/data/UniversalDependencies/ireadUDTests/";
+		conllPath = "/local/data/UniversalDependencies/ireadConllTests/";
+		version = "iread";
+	}
+	
 	public static void main(String[] args) {
-		version = "2_0";
+		version = "iread";
 		addLanguages();
 		for (Pair<String,String> language : languages) {
 			System.out.println(language.toString());

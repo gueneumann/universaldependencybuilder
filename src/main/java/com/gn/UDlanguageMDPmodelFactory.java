@@ -118,8 +118,8 @@ public class UDlanguageMDPmodelFactory {
 
 	public static void main(String[] args) 
 			throws IOException, NoSuchAlgorithmException, InvalidInputDataException{
-		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("2_0");
-		ConllUtils.infosize = 10;
+		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("iread");
+		ConllUtils.infosize = 12;
 		
 		//udFactory.trainAllLanguages();
 		udFactory.testAllLanguages();

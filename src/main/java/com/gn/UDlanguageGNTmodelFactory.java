@@ -126,7 +126,7 @@ public class UDlanguageGNTmodelFactory {
 	private void runPOStagger() throws IOException, ConfigurationException {
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("POS");
-//		this.trainAllLanguages();
+		this.trainAllLanguages();
 		this.testAllLanguages(false);
 //		this.testSingleLanguage("German","de", udPerformance);
 	}
@@ -151,9 +151,9 @@ public class UDlanguageGNTmodelFactory {
 //		this.trainSingleLanguage("Czech","cs");
 	}
 	public static void main(String[] args) throws IOException, ConfigurationException{
-		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("2_0");
+		UDlanguageGNTmodelFactory udFactory = new UDlanguageGNTmodelFactory("iread");
 		
-		udFactory.runPOStagger();
+		udFactory.runMORPHtagger();
 	}
 
 }

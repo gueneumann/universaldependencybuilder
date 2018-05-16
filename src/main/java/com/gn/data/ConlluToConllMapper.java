@@ -410,7 +410,7 @@ public class ConlluToConllMapper {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException{
-		UDlanguages.setVersion_2_0();
+		UDlanguages.setVersion_iread();
 		UDlanguages.addLanguages();
 		runUDversion();
 	}

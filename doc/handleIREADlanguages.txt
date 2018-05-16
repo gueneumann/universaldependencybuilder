@@ -1,0 +1,75 @@
+Steps for training and testing languages used in iREAD
+
+1. retrain and test German with new corpus
+
+- define UD folder and conll folder just to be consistent with current UD version handling
+
+Define two parallel toplevel directoris that keep the source CONLL files and the target CONLL files:
+
+conlluPath = "/local/data/UniversalDependencies/ireadUDTests/";
+conllPath = "/local/data/UniversalDependencies/ireadConllTests/";
+
+-> com.gn.data.UDlanguages.setVersion_iread()
+		
+source file names need suffix .conllu
+
+Now, to test with a new test file, make sure to name it:
+
+	XYZ-ud-test.conllu
+
+	for iread German test data:
+
+	cp  iread_de.conll de-ud-test.conllu
+	
+	to create new conll data for GNT and MDParser call
+	
+	com.gn.data.ConlluToConllMapper.main(String[]) with UDlanguages.setVersion_iread();
+	
+	-> DONE
+	
+Training and testing with new corpus.
+
+-> FORATTING ERRORS - HAVE TO WAIT UNTIL corpus is corrected
+
+1. Test GNT and MDParser on new test corpus:
+
+POS tagger:
+
+++++
+Do testing from file: /local/data/UniversalDependencies/ireadConllTests/German/de-ud-test.conll
+Create eval file: eval/de-ud-test.txt
+System time (msec): 67
+Sentences: 1000
+Testing instances: 9611
+Sentences/sec: 14925
+Words/sec: 143447
+All pos: 9611 Correct: 9111 Accuracy: 94.80%
+All OOV pos: 1000 Correct: 812 Accuracy: 81.20%
+All InV pos: 8611 Correct: 8299 Accuracy: 96.38%
+Time: 2763; Complete testing for 1 languages:
+Lang                 |  Acc   |  OOV   |  INV   |  Tok/Sec
+------------------------------------------
+German               |  94.80 |  81.20 |  96.38 | 
+------------------------------------------
+Avg                  |  94.80 |  81.20 |  96.38
+
+MORPH tagger:
+
+++++
+Do testing from file: /local/data/UniversalDependencies/ireadConllTests/German/de-ud-test.conll
+Create eval file: eval/de-ud-test.txt
+System time (msec): 256
+Sentences: 1000
+Testing instances: 9611
+Sentences/sec: 3906
+Words/sec: 37542
+All pos: 9611 Correct: 6928 Accuracy: 72.08%
+All OOV pos: 1000 Correct: 469 Accuracy: 46.90%
+All InV pos: 8611 Correct: 6459 Accuracy: 75.01%
+Time: 52248; Complete testing for 1 languages:
+Lang                 |  Acc   |  OOV   |  INV   |  Tok/Sec
+------------------------------------------
+German               |  72.08 |  46.90 |  75.01 | 
+------------------------------------------
+Avg                  |  72.08 |  46.90 |  75.01
+
