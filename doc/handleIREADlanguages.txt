@@ -1,37 +1,43 @@
 Steps for training and testing languages used in iREAD
 
-1. retrain and test German with new corpus
+TODO:
 
-- define UD folder and conll folder just to be consistent with current UD version handling
+a. train and test German with new corpus
 
-Define two parallel toplevel directoris that keep the source CONLL files and the target CONLL files:
+b. retrain models for all languages by adding all available corpora into train
+
+STEPS:
+
+a. train and test German with new corpus
+
+
+1. Define two parallel toplevel directoris that keep the source CONLL files and the target CONLL files:
 
 conlluPath = "/local/data/UniversalDependencies/ireadUDTests/";
 conllPath = "/local/data/UniversalDependencies/ireadConllTests/";
 
 -> com.gn.data.UDlanguages.setVersion_iread()
 		
-source file names need suffix .conllu
-
 Now, to test with a new test file, make sure to name it:
 
 	XYZ-ud-test.conllu
 
 	for iread German test data:
 
-	cp  iread_de.conll de-ud-test.conllu
+		cp  iread_de.conll de-ud-test.conllu
 	
-	to create new conll data for GNT and MDParser call
+		to create new conll data for GNT and MDParser call
 	
-	com.gn.data.ConlluToConllMapper.main(String[]) with UDlanguages.setVersion_iread();
+		com.gn.data.ConlluToConllMapper.main(String[]) with UDlanguages.setVersion_iread();
 	
 	-> DONE
 	
-Training and testing with new corpus.
+Training and testing with new German corpus.
 
 -> FORATTING ERRORS - HAVE TO WAIT UNTIL corpus is corrected
+-> MDParser needs 12 columns
 
-1. Test GNT and MDParser on new test corpus:
+2. Test GNT and MDParser on new test corpus:
 
 POS tagger:
 
@@ -73,3 +79,8 @@ German               |  72.08 |  46.90 |  75.01 |
 ------------------------------------------
 Avg                  |  72.08 |  46.90 |  75.01
 
+-> probable wrong because of formatting errors
+
+MDParser
+
+3. Add new corpus to training and also devel and test and etc.
