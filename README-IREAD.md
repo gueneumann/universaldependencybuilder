@@ -64,3 +64,18 @@ Greek                |  90.79 |  89.03 |
 Spanish              |  89.99 |  87.86 | 
 --------------------------------------------
 Avg                  |  89.69 |  87.81
+
+### MDP without projectivity test:
+
+de.dfki.lt.mdparser.algorithm.Dependency.isPermissible(DependencyStructure, boolean)
+
+Complete testing for 4 languages:
+System time (msec): 4355
+Lang                 |  UAS   |  LAS   |  Speed tot. 
+--------------------------------------------
+English              |  83.83 |  81.22 | 
+German               |  77.94 |  72.52 | 
+Greek                |  83.63 |  80.23 | 
+Spanish              |  84.62 |  81.19 | 
+--------------------------------------------
+Avg                  |  82.51 |  78.79
