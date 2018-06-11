@@ -39,7 +39,7 @@ Spanish              |  96.08 |  84.32 |  97.01 |
 ------------------------------------------
 Avg                  |  90.35 |  76.56 |  92.22
 
-## MDP dependency analysis:
+## MDP dependency analysis on test:
 
 Complete testing for 4 languages:
 System time (msec): 4153
@@ -52,3 +52,15 @@ Spanish              |  84.54 |  81.09 |
 --------------------------------------------
 Avg                  |  81.97 |  78.33
 
+## MDP dependency analysis on train:
+
+Complete testing for 4 languages:
+System time (msec): 13201
+Lang                 |  UAS   |  LAS   |  Speed tot. 
+--------------------------------------------
+English              |  91.06 |  89.74 | 
+German               |  86.91 |  84.63 | 
+Greek                |  90.79 |  89.03 | 
+Spanish              |  89.99 |  87.86 | 
+--------------------------------------------
+Avg                  |  89.69 |  87.81
