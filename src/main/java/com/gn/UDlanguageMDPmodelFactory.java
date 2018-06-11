@@ -121,7 +121,7 @@ public class UDlanguageMDPmodelFactory {
 		UDlanguageMDPmodelFactory udFactory = new UDlanguageMDPmodelFactory("iread");
 		ConllUtils.infosize = 12;
 		
-		//udFactory.trainAllLanguages();
+		udFactory.trainAllLanguages();
 		udFactory.testAllLanguages();
 		
 	}
