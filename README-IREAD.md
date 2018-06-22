@@ -52,6 +52,119 @@ Spanish              |  84.54 |  81.09 |
 --------------------------------------------
 Avg                  |  81.97 |  78.33
 
+
+RUNTIME:
+
+MDP:
+
+Complete Training time: 47763 milliseconds.
+Complete training for 4 languages:
+System time (msec): 117884
+Testing of: <English,en>
+Time to read model (msec): 1050
+using algorithm "covington"
+No. of sentences: 2078
+No. of threads: 8
+Time to parse (msec): 224
+Speed (sent/s): 9276.785714285714
+Number of configurations: 67729
+Average number of configurations per sentence: 32
+
+
+Testing of: <German,de>
+Time to read model (msec): 1018
+using algorithm "covington"
+No. of sentences: 978
+No. of threads: 8
+Time to parse (msec): 58
+Speed (sent/s): 16862.068965517243
+Number of configurations: 44825
+Average number of configurations per sentence: 45
+
+
+Testing of: <Greek,el>
+Time to read model (msec): 145
+using algorithm "covington"
+No. of sentences: 457
+No. of threads: 8
+Time to parse (msec): 33
+Speed (sent/s): 13848.484848484848
+Number of configurations: 31270
+Average number of configurations per sentence: 68
+
+
+Testing of: <Spanish,es>
+Time to read model (msec): 1432
+using algorithm "covington"
+No. of sentences: 427
+No. of threads: 8
+Time to parse (msec): 41
+Speed (sent/s): 10414.634146341463
+Number of configurations: 39194
+Average number of configurations per sentence: 91
+
+POS
+
+Create eval file: eval/en-ud-test.txt
+System time (msec): 258
+Sentences: 2077
+Testing instances: 25096
+Sentences/sec: 8050
+Words/sec: 97271
+
+Create eval file: eval/de-ud-test.txt
+System time (msec): 177
+Sentences: 977
+Testing instances: 16268
+Sentences/sec: 5519
+Words/sec: 91909
+
+Create eval file: eval/el-ud-test.txt
+System time (msec): 73
+Sentences: 456
+Testing instances: 10422
+Sentences/sec: 6246
+Words/sec: 142767
+
+Create eval file: eval/es-ud-test.txt
+System time (msec): 80
+Sentences: 426
+Testing instances: 12000
+Sentences/sec: 5325
+Words/sec: 150000
+
+MORPH
+
+Create eval file: eval/en-ud-test.txt
+System time (msec): 290
+Sentences: 2077
+Testing instances: 25096
+Sentences/sec: 7162
+Words/sec: 86537
+
+Create eval file: eval/de-ud-test.txt
+System time (msec): 315
+Sentences: 977
+Testing instances: 16268
+Sentences/sec: 3101
+Words/sec: 51644
+
+Create eval file: eval/el-ud-test.txt
+System time (msec): 149
+Sentences: 456
+Testing instances: 10422
+Sentences/sec: 3060
+Words/sec: 69946
+
+Create eval file: eval/es-ud-test.txt
+System time (msec): 147
+Sentences: 426
+Testing instances: 12000
+Sentences/sec: 2897
+Words/sec: 81632
+
+
+
 ## MDP dependency analysis on train:
 
 Complete testing for 4 languages:
