@@ -85,6 +85,8 @@ public class UDlanguages {
 			setVersion_2_1(); break;
 		case "iread":
 			setVersion_iread(); break;
+		case "udify":
+			setVersion_udify(); break;
 		default: System.err.println("UD version not known: " + UDlanguages.version); System.exit(0);
 		}
 		UDlanguages.getAllLanguagePairs(conlluPath);
@@ -167,8 +169,14 @@ public class UDlanguages {
 		version = "iread";
 	}
 	
+	public static void setVersion_udify(){
+		conlluPath = "/local/data/UniversalDependencies/ud-multilingual-v2.3/";
+		conllPath = "/local/data/UniversalDependencies/conll_multilingual23/";
+		version = "udify";
+	}
+	
 	public static void main(String[] args) {
-		version = "iread";
+		version = "udify";
 		addLanguages();
 		for (Pair<String,String> language : languages) {
 			System.out.println(language.toString());
