@@ -131,7 +131,7 @@ public class UDlanguageGNTmodelFactory {
 //		this.testSingleLanguage("German","de", udPerformance);
 	}
 	
-	private void runMultilingualPOStagger() throws IOException, ConfigurationException {
+	public void runMultilingualPOStagger() throws IOException, ConfigurationException {
 		UDlanguagePerformance udPerformance = new UDlanguagePerformance();
 		this.setTagger("POS");
 		this.trainSingleLanguage("multilingual","ml");

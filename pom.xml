@@ -29,7 +29,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>caller.MAIN</mainClass>
+							<mainClass>com.gn.UDprocessor</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

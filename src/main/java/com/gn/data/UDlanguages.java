@@ -114,6 +114,7 @@ public class UDlanguages {
 		case "2_0": UDlanguages.setVersion_2_0();
 		case "2_1": UDlanguages.setVersion_2_1();
 		case "iread": UDlanguages.setVersion_iread();
+		case "udify": UDlanguages.setVersion_udify();
 		}
 	}
 
@@ -170,8 +171,10 @@ public class UDlanguages {
 	}
 	
 	public static void setVersion_udify(){
-		conlluPath = "/local/data/UniversalDependencies/ud-multilingual-v2.3/";
-		conllPath = "/local/data/UniversalDependencies/conll_multilingual23/";
+		//conlluPath = "/local/data/UniversalDependencies/ud-multilingual-v2.3/";
+		//conllPath = "/local/data/UniversalDependencies/conll_multilingual23/";
+		conlluPath = "/local/ssd/munderline/data/ud-multilingual-v2.3/";
+		conllPath = "/local/ssd/munderline/data/conll_multilingual23/";
 		version = "udify";
 	}
 	
